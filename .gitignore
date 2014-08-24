@@ -1,1 +1,5 @@
 config.php
+excel/*
+img/*
+pdf-generator/*
+teszt/*
