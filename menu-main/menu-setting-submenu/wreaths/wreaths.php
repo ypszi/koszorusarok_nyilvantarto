@@ -4,7 +4,7 @@
 		$wreath_id = $_GET["koszoru_tipus"];
 	}
 
-	$query = "	SELECT id,type 
+	$query = "	SELECT id,type
 				FROM `base_wreath_type`
 				ORDER BY type ASC;";
 
@@ -24,10 +24,10 @@
 		}
 	}
 	echo '</div>';
-	
+
 	echo "<br /><br />";
 	$query = "	SELECT special_wreath.picture, special_wreath.id,special_wreath.fancy, special_wreath.name, special_wreath.note, special_wreath.calculate_price, special_wreath.sale_price, base_wreath.price, base_wreath.size, base_wreath.note AS base_wreath_note
-				FROM `special_wreath`,`base_wreath` 
+				FROM `special_wreath`,`base_wreath`
 				WHERE special_wreath.base_wreath_id=base_wreath.id AND base_wreath.type='".$wreath_id."'
 				ORDER BY special_wreath.name ASC;";
 
@@ -53,8 +53,8 @@
 						</tr>
 					</table>';
 
-				$query_flowers = "	SELECT flower.type, flower.color, flower.price ,conect_flower_special_wreath.priece 
-									FROM `conect_flower_special_wreath`,`flower` 
+				$query_flowers = "	SELECT flower.type, flower.color, flower.price ,conect_flower_special_wreath.priece
+									FROM `conect_flower_special_wreath`,`flower`
 									WHERE conect_flower_special_wreath.special_wreath_id = '".$row['id']."' AND conect_flower_special_wreath.id_flower = flower.id
 									ORDER BY flower.leaf ASC, conect_flower_special_wreath.priece DESC;";
 				$result_flowers = mysql_query($query_flowers) or die (mysql_error());
@@ -77,8 +77,8 @@
 				echo "</table>";
 
 				// VIRÁGOK
-				$query_onlyflowers = "	SELECT flower.type, flower.color, flower.price ,conect_flower_special_wreath.priece 
-				FROM `conect_flower_special_wreath`,`flower` 
+				$query_onlyflowers = "	SELECT flower.type, flower.color, flower.price ,conect_flower_special_wreath.priece
+				FROM `conect_flower_special_wreath`,`flower`
 				WHERE conect_flower_special_wreath.special_wreath_id = '".$row['id']."' AND conect_flower_special_wreath.id_flower = flower.id AND flower.type NOT LIKE 'levél' AND flower.type NOT LIKE 'rezgő';";
 				$result_onlyflowers = mysql_query($query_onlyflowers) or die (mysql_error());
 
@@ -115,8 +115,8 @@
 				}
 
 				// LEVÉL
-				$query_onlyleafs = "	SELECT flower.type, flower.color, flower.price ,conect_flower_special_wreath.priece 
-				FROM `conect_flower_special_wreath`,`flower` 
+				$query_onlyleafs = "	SELECT flower.type, flower.color, flower.price ,conect_flower_special_wreath.priece
+				FROM `conect_flower_special_wreath`,`flower`
 				WHERE conect_flower_special_wreath.special_wreath_id = '".$row['id']."' AND conect_flower_special_wreath.id_flower = flower.id AND flower.type LIKE 'levél';";
 				$result_onlyleafs = mysql_query($query_onlyleafs) or die (mysql_error());
 
@@ -153,8 +153,8 @@
 				}
 
 				// REZGŐ
-				$query_onlyrezgo = "	SELECT flower.type, flower.color, flower.price ,conect_flower_special_wreath.priece 
-				FROM `conect_flower_special_wreath`,`flower` 
+				$query_onlyrezgo = "	SELECT flower.type, flower.color, flower.price ,conect_flower_special_wreath.priece
+				FROM `conect_flower_special_wreath`,`flower`
 				WHERE conect_flower_special_wreath.special_wreath_id = '".$row['id']."' AND conect_flower_special_wreath.id_flower = flower.id AND flower.type LIKE 'rezgő';";
 				$result_onlyrezgo = mysql_query($query_onlyrezgo) or die (mysql_error());
 
@@ -180,6 +180,9 @@
 		echo'   </td>
 				<td>
 					<div style="text-align:right;">
+
+				<input type="button" value="" style="background-image:url('.$conf_path_abs.'/img/icons/Delete-icon.png); background-repeat:no-repeat; width:35px; " class="button" onclick="deleteSpecialWreath('.$row["id"].')">
+
 				<a href="'.$conf_path_abs.'?page=beallitas&subpage=koszoru_szerkesztes
 				&wreath='.$row["name"].'&fancy='.$row["fancy"].'&img='.$row["picture"].'&note='.$row["note"].'&size='.$row["size"].
 				$flotype.$flocolor.$floqty.$flonum.
@@ -187,6 +190,7 @@
 				$isrezgo.$rezgoqty.'">
 				<input type="button" value="" class="button" style="background-image:url('.$conf_path_abs.'img/icons/Edit-icon.png); background-repeat:no-repeat; width:32px; height: 32px;" id="'.$wreath_id.'"/>
 				</a>
+
 				<a href="'.$conf_path_abs.'menu-main/menu-setting-submenu/wreaths/get_wreath_pdf.php?id='.$row["id"].'" target="_blank">
 				<input type="button" value="" class="button" style="background-image:url('.$conf_path_abs.'img/icons/Print-icon.png); background-repeat:no-repeat; width:32px; height: 32px;" id="'.$wreath_id.'"/>
 				</a>
@@ -194,9 +198,9 @@
 					<div style="margin-top:2px;">Koszor&uacute;alap: '.number_format($row["price"], 0, ',', ' ').' Ft</div>
 					<div style="margin-top:2px;">&Ouml;sszetev&#337;k : '.number_format($flower_price, 0, ',', ' '). ' Ft</div>
 					<div style="margin-top:5px;">V&eacute;g&ouml;sszeg  : <strong>'.number_format($row["calculate_price"], 0, ',', ' ') .' Ft</strong>
-					<div style="margin-top:5px;">&Eacute;rt&eacute;kes&iacute;t&eacute;si &ouml;sszeg: 
+					<div style="margin-top:5px;">&Eacute;rt&eacute;kes&iacute;t&eacute;si &ouml;sszeg:
 					<div style="text-align:right;">'.number_format(round(($row["calculate_price"]+1000)*1.1111,-2), 0, ',', ' ') .' Ft</div>
-					<div style="margin-top:25px;">R&ouml;gz&iacute;tett v&eacute;g &ouml;sszeg: 
+					<div style="margin-top:25px;">R&ouml;gz&iacute;tett v&eacute;g &ouml;sszeg:
 					<div style="text-align:right; font:bold 14px/30px Georgia, serif; color:#ef5f44;">'.number_format($row["sale_price"], 0, ',', ' ') .' Ft</div>
 				</td>
 

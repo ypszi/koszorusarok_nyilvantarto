@@ -3044,3 +3044,16 @@ function mark_it() {
 			}
 		});
 	}
+
+	function deleteSpecialWreath(id) {
+		if (confirm('Biztos törli a koszorút?')) {
+			$.ajax({
+				type: "POST",
+				url: "menu-main/menu-setting-submenu/wreaths/del_special_wreath.php",
+				data: { id: id},
+				success: function(data){
+					location.reload();
+				}
+			});
+		}
+	}
