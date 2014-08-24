@@ -27,7 +27,8 @@
 			</tr>
 			<tr>
 				<td style="font: normal 16px/18px 'Arial'; color: #89a583;">
-		<?php echo '<input type="text" name="wreath_name" id="wreath_name" placeholder="Típus + sorszám" value="'.$_GET['wreath'].'">';
+		<?php echo '<input type="text" name="wreath_name" id="wreath_name" placeholder="Típus + sorszám" value="'.$_GET['wreath'].'" onChange="checkWreathName()" >';
+					echo '<div id="wreath_name_error" for="wreath_name" style="color: #ff0000; margin: 5px 0 0 0;"></div>';
 					echo '<input type="text" name="wreath_fancy" id="wreath_fancy" placeholder="Fantázia név" value="'.$_GET['fancy'].'" style="margin-top: 7px;">'; ?>
 				</td>
 				<td style="font: normal 16px/18px 'Arial'; color: #89a583; position: relative; right: -28px;">

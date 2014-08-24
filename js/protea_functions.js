@@ -16,7 +16,7 @@
 				success: function(data){
 				$("#alertwindow").html(data);
 				}
-			}); 
+			});
 	}
 
 	///////////////// OFFERFORM.PHP /////////////////
@@ -31,7 +31,7 @@
 				document.getElementById(to).disabled = "";
 				$("#"+to).html(data);
 				}
-			}); 
+			});
 		}
 
 		function leftForUs() {
@@ -40,7 +40,7 @@
 			$("#leaf").toggle();
 			$("#rezgotable").toggle();
 
-			if($('#left_for_us').prop('checked')) { 
+			if($('#left_for_us').prop('checked')) {
 				$("#fullprice").attr("onchange","componentPrice()");
 				$("#calced_price").html(' Összetevőkre szánt összeg: ');
 				$("#copy_price").css('display', 'none');
@@ -66,7 +66,7 @@
 			var isleftForUs = document.getElementById('left_for_us').checked;
 			return isleftForUs;
 		}
-		
+
 		function addFlowerRow_oForm() {
 			var xmlhttp;
 			var flowernum = document.getElementById('flowernum').value;
@@ -78,7 +78,7 @@
 			} else {	// code for IE6, IE5
 				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 			}
-			
+
 			xmlhttp.onreadystatechange = function() {
 				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 					var newRow = document.getElementById('flower').insertRow(-1);
@@ -111,7 +111,7 @@
 			} else {	// code for IE6, IE5
 				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 			}
-			
+
 			xmlhttp.onreadystatechange = function() {
 				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 					var newRow = document.getElementById('leaf').insertRow(-1);
@@ -173,7 +173,7 @@
 				}
 			}); }, 200);
 		}
-		
+
 		function offerribbonEnable() {
 			var isEnabled = document.getElementById('isOfferribbon').checked;
 			document.getElementById("offerribbon").disabled = "";
@@ -265,7 +265,7 @@
 				query2.push(encodeURIComponent(fcolor[ind].getAttribute('id')) + '=' + encodeURIComponent(fcolor[ind].value));
 				query3.push(encodeURIComponent(qty[ind].getAttribute('id')) + '=' + encodeURIComponent(qty[ind].value));
 				query6.push(encodeURIComponent(fitemprice[ind].getAttribute('id')) + '=' + encodeURIComponent(fitemprice[ind].value));
-				
+
 				ind++;
 			};
 
@@ -285,11 +285,11 @@
 			$.ajax({
 				type: "GET",
 				url: "menu-main/menu-offer-submenu/new-offer/calculate.php?wtype="+ wtype + "&wsize=" + wsize + "&"
-				+ query1.join('&') + '&' + query2.join('&') + '&' 
-				+ query3.join('&') + '&' + query6.join('&') + "&flowernum=" + flowernum + '&' 
-				+ query4.join('&') + '&' + query5.join('&') + '&' 
-				+ query7.join('&') + "&leafnum=" + leafnum 
-				+ "&rezgo=" + rezgo + "&rezgoqty=" + rezgoqty 
+				+ query1.join('&') + '&' + query2.join('&') + '&'
+				+ query3.join('&') + '&' + query6.join('&') + "&flowernum=" + flowernum + '&'
+				+ query4.join('&') + '&' + query5.join('&') + '&'
+				+ query7.join('&') + "&leafnum=" + leafnum
+				+ "&rezgo=" + rezgo + "&rezgoqty=" + rezgoqty
 				+ "&isOfferribbon=" + isOfferribbon + "&offerribbon=" + offerribbon + "&offerribboncolor=" + offerribboncolor + "&ribbonprice=" + ritemprice,
 				success: function(data){
 					$(".toLoad_wreathPrice").val(data);
@@ -537,7 +537,7 @@
 											alertwindow.style.display = "block";
 											setTimeout('alertwindow.style.display = "none";', 1000);
 											return false;
-										} 
+										}
 										else {
 											return true;
 										}
@@ -559,7 +559,7 @@
 			var catalog = document.getElementById('from_catalog');
 			var params = window.location.search.replace("?", "");
 			if (catalog.checked) {
-				$.ajax({ 
+				$.ajax({
 					type: "GET",
 					url: (params == "page=ajanlatok&subpage=uj_ajanlat")?"menu-main/menu-offer-submenu/new-offer/catalogwreath.php?offer_div=right-content&ajanlat_id="+id:"menu-main/menu-offer-submenu/new-offer/catalogwreath.php?offer_div=new_offer&ajanlat_id="+id,
 					success: function(data){
@@ -613,7 +613,7 @@
 				$('#prev_img_catwreath').width("80");
  				$('#prev_img_catwreath').css('visibility', 'visible');
 				}
-			}); 
+			});
 		}
 
 	///////////////// OFFERFORM.PHP VÉGE /////////////////
@@ -633,7 +633,7 @@
 
 		var isBack = (!back) ? "" : "?back=true";
 
-		$.ajax({ 
+		$.ajax({
 			type: "GET",
 			url: "menu-main/menu-order-submenu/new-order/orderstep1.php" + isBack,
 			data: (!back) ? "" : $("#step2").serialize(),
@@ -641,7 +641,7 @@
 				$("#ordertable").html(data);
 				$.getScript("js/protea_functions.js");
 			}
-		}); 
+		});
 	}
 
 	function toStep2(back) {
@@ -650,7 +650,7 @@
 			$("#ord_step1").unbind( "click" );
 			$("#ord_step2").unbind( "click" );
 			$("#ord_step3").unbind( "click" );
-			
+
 
 			$("#ord_step1").bind( "click", function(){
 				toStep1(true);
@@ -677,7 +677,7 @@
 				}
 				calcSumm();
 			}
-		}); 
+		});
 	}
 
 	function toStep3() {
@@ -686,7 +686,7 @@
 			$("#ord_step1").unbind( "click" );
 			$("#ord_step2").unbind( "click" );
 			$("#ord_step3").unbind( "click" );
-			
+
 
 			$("#ord_step1").bind( "click", function(){
 				toStep1(true);
@@ -699,7 +699,7 @@
 			$("#ord_step2").css("cursor", "pointer");
 			$("#ord_step3").css("cursor", "default");
 
-		$.ajax({ 
+		$.ajax({
 			type: "GET",
 			url: "menu-main/menu-order-submenu/new-order/orderstep3.php",
 			data: $("#step2").serialize(),
@@ -707,17 +707,17 @@
 				$("#ordertable").html(data);
 				$.getScript("js/protea_functions.js");
 			}
-		}); 
+		});
 	}
 
 	function order() {
-		$.ajax({ 
+		$.ajax({
 			type: "GET",
 			url: "menu-main/menu-order-submenu/new-order/order.php",
 			success: function(data){
 			$("#ordertable").html(data);
 			}
-		}); 
+		});
 	}
 
 	///////////////// ORDERSTEP 1-hez /////////////////
@@ -732,13 +732,13 @@
 		} else {
 			var newRow = wtableRef.insertRow(-1);
 			var lastRowIndex = wtableRef.rows.length-1;
-			
+
 			var wreathnum = document.getElementById('wreathnum').value;
 			var offernum = document.getElementById('offernum').value;
 
 			wreathnum++;
 			document.getElementById('wreathnum').value = wreathnum;
-			$.ajax({ 
+			$.ajax({
 				type: "GET",
 				url: "menu-main/menu-order-submenu/new-order/wreathrow.php?wreathnum="+wreathnum,
 				success: function(data){
@@ -776,7 +776,7 @@
 
 			offernum++;
 			document.getElementById('offernum').value = offernum;
-			$.ajax({ 
+			$.ajax({
 				type: "GET",
 				url: "menu-main/menu-order-submenu/new-order/offerrow.php?offernum="+offernum,
 				success: function(data){
@@ -822,7 +822,7 @@
 			$('#wreath_preview_src'+id).val(data);
 			$('#wreath_preview'+id).attr('src',data);
 			}
-		}); 
+		});
 	}
 
 	function new_offer(id) {  // AZ ELŐUGRÓ ABLAKOT HÍVJA MEG -> ÚJ AJÁNLAT
@@ -837,7 +837,7 @@
 			// $("#exit").toggle();
 			$("#new_offer").html(data);
 			}
-		}); 
+		});
 	}
 
 	function mod_offer(id) {  // AZ ELŐUGRÓ ABLAKOT HÍVJA MEG -> AJÁNLAT MÓDOSÍT
@@ -856,17 +856,17 @@
 				$('#new_offer').html(data);
 				//document.getElementById('exit').style.display = "block";
 				}
-			}); 
+			});
 		}
 	}
-	
+
 	function del_offer(id) {  // Ajánlat sorát törli
 		if (confirm("Biztosan törli ezt a sort?")) {
 			$('#offertable'+id).parent().parent().remove();
 			$('#offernum').val($('#offernum').val()-1);
 		}
 	}
-	
+
 	var checknum = 0;
 
 	function check() {
@@ -1000,7 +1000,7 @@
 			document.getElementById(to).disabled = "";
 			$("#"+to).html(data);
 			}
-		}); 
+		});
 	}
 
 	///////////////// ORDERSTEP 2-höz /////////////////
@@ -1011,7 +1011,7 @@
 	}
 
 	function customPlace() {
-		$.ajax({ 
+		$.ajax({
 			type: "GET",
 			url: "menu-main/menu-order-submenu/new-order/customplace.php",
 			success: function(data){
@@ -1039,7 +1039,7 @@
 	}
 
 	function pay_prices() {
-		$.ajax({ 
+		$.ajax({
 			type: "GET",
 			url: "menu-main/menu-order-submenu/new-order/pay_prices.php",
 			success: function(data){
@@ -1102,7 +1102,7 @@
 
 	function pending_on_shipment() {
 		var radios = document.getElementsByName('shipment');
-		
+
 		if (radios[0].checked) {
 			$(".pending_on_shipment").hide();
 			$("#pending_on_shipment").html("* Átvétel időpontja");
@@ -1303,7 +1303,7 @@
 			document.getElementById(to).disabled = "";
 			$("#"+to).html(data);
 			}
-		}); 
+		});
 	}
 
 	function loadWreathfromCatalog(div, ajanlat_select) {
@@ -1317,7 +1317,7 @@
 			$("#"+div).html(data);
 			calculatePrice_oForm(); writeWPrice(); writeFPrice(); writeLPrice();
 			}
-		}); 
+		});
 	}
 
 	function loadWreathfromOffer(div, ajanlat_select) {
@@ -1330,7 +1330,7 @@
 				$("#"+div).html(data);
 				calculatePrice_oForm(); writeWPrice(); writeFPrice(); writeLPrice();
 			}
-		}); 
+		});
 	}
 
 	function loadFlowerColors(ftype,fcolor) {
@@ -1341,7 +1341,7 @@
 			fcolor.disabled = "";
 			$(fcolor).html(data);
 			}
-		}); 
+		});
 	}
 
 	///////////////// CATALOGWREATH.PHP VÉGE /////////////////
@@ -1358,13 +1358,13 @@
 			success: function(data){
 			$("#itemprice"+id).val(data);
 			}
-		}); 
+		});
 	}
 
 	///////////////// FLOWERROW.PHP VÉGE /////////////////
 
 	///////////////// LEAFROW.PHP /////////////////
-	
+
 	function LeafItemPrice(id) {
 		var leaf = document.getElementById('leaf'+id).value;
 		var leafqty = document.getElementById('leafqty'+id).value;
@@ -1375,7 +1375,7 @@
 			success: function(data){
 			$("#leafitemprice"+id).val(data);
 			}
-		}); 
+		});
 	}
 
 	///////////////// LEAFROW.PHP VÉGE /////////////////
@@ -1396,14 +1396,14 @@ function mark_it() {
 			return false;
 		} else {
 			if(confirm('Biztosan áthelyezi a rendelést?')) {
-				$.ajax({ 
+				$.ajax({
 					type: "GET",
 					url: "menu-main/menu-order-submenu/change_shop.php?id="+id,
 					data: "&shop="+$("#change_shop").val(),
 					success: function(data){
 					$("#right-content").html(data);
 					}
-				}); 
+				});
 			} else {
 				return false;
 			}
@@ -1419,7 +1419,7 @@ function mark_it() {
 			$('#shop_changer').html(data);
 			document.getElementById('exit').style.display = "block";
 			}
-		}); 
+		});
 	}
 
 	///////////////// ORDER.PHP VÉGE /////////////////
@@ -1441,14 +1441,14 @@ function mark_it() {
 		modbutton.innerHTML += "<input type='hidden' id='acqtype' value = '"+type[id].value+"'> ";
 	}
 	function modAcquisition(id) {
-		$.ajax({ 
+		$.ajax({
 			type: "POST",
 			url: "menu-main/menu-setting-submenu/acquisition/acquisitionmod.php",
 			data: $("#acquisitionform"+id).serialize(),
 			success: function(data){
 			$("#acquisition"+id).html(data);
 			}
-		}); 
+		});
 	}
 	function cancelAcquisition(id) {
 		var acqtype = document.getElementById('acqtype').value;
@@ -1466,14 +1466,14 @@ function mark_it() {
 	}
 	function delAcquisition(id) {
 		if(confirm('Biztosan törli?')) {
-			$.ajax({ 
+			$.ajax({
 				type: "POST",
 				url: "menu-main/menu-setting-submenu/acquisition/acquisitiondel.php",
 				data: $("#acquisitionform"+id).serialize(),
 				success: function(data){
 				$("#acquisition"+id).html(data);
 				}
-			}); 
+			});
 		}
 	}
 	function addAcquisitionTR() {
@@ -1485,7 +1485,7 @@ function mark_it() {
 		} else {	// code for IE6, IE5
 			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 		}
-		
+
 		xmlhttp.onreadystatechange = function() {
 			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 				var newRow = acquisitiontableRef.insertRow(-1);
@@ -1533,7 +1533,7 @@ function mark_it() {
 	var cittext = document.getElementsByName("cittext");
 
 	function editCit(id) {
-		$.ajax({ 
+		$.ajax({
 			type: "POST",
 			url: "menu-main/menu-setting-submenu/citation/citationmodform.php",
 			data: $("#citationform"+id).serialize(),
@@ -1541,31 +1541,31 @@ function mark_it() {
 			$("#citation_popup").html(data);
 			$("#citation_popup").toggle();
 			}
-		}); 
+		});
 	}
 	function delCit(id) {
 		if(confirm('Biztosan törli?')) {
-			$.ajax({ 
+			$.ajax({
 				type: "POST",
 				url: "menu-main/menu-setting-submenu/citation/citationdel.php",
 				data: $("#citationform"+id).serialize(),
 				success: function(data){
 				$("#citation"+id).html(data);
 				}
-			}); 
+			});
 		}
 	}
 	function addcitTR() {
-		$.ajax({ 
+		$.ajax({
 			type: "POST",
 			url: "menu-main/menu-setting-submenu/citation/newcitTR.php",
 			success: function(data){
 			$("#citation_popup").html(data);
 			$("#citation_popup").toggle();
 			}
-		}); 
+		});
 	}
-	
+
 	///////////////// CITATION.PHP VÉGE /////////////////
 
 	///////////////// EMPLOYEES.PHP /////////////////
@@ -1579,10 +1579,10 @@ function mark_it() {
 	var color = document.getElementsByName("color");
 	var enable = document.getElementsByName("enable");
 	var access_level = document.getElementsByName("access_level");
-	
+
 	function editUser(id) {
 		var bgcolor = "#"+$("#color"+id).val();
-		$.ajax({ 
+		$.ajax({
 			type: "POST",
 			url: "menu-main/menu-setting-submenu/employees/usermodform.php",
 			data: $("#usereditform"+id).serialize(),
@@ -1591,32 +1591,32 @@ function mark_it() {
 			$("#colorSelector").css('background-color', bgcolor);
 			$("#user_popup").toggle();
 			}
-		}); 
+		});
 	}
 
 	function delUser(id) {
 		if(confirm('Biztosan törli?')) {
-			$.ajax({ 
+			$.ajax({
 				type: "POST",
 				url: "menu-main/menu-setting-submenu/employees/userdel.php",
 				data: $("#usereditform"+id).serialize(),
 				success: function(data){
 				$("#user"+id).html(data);
 				}
-			}); 
+			});
 		}
 	}
 	function addUserTR() {
-		$.ajax({ 
+		$.ajax({
 				type: "POST",
 				url: "menu-main/menu-setting-submenu/employees/newuserTR.php",
 				success: function(data){
 				$("#user_popup").html(data);
 				$("#user_popup").toggle();
 				}
-			}); 
+			});
 	}
-	
+
 	///////////////// EMPLOYEES.PHP VÉGE /////////////////
 
 
@@ -1625,10 +1625,10 @@ function mark_it() {
 	var cemeteryid = document.getElementsByName("cemeteryid");
 	var cemeteryname = document.getElementsByName("cemeteryname");
 	var cemeteryaddress = document.getElementsByName("cemeteryaddress");
-	
+
 	function editcemetery(id) {
 		var bgcolor = "#"+$("#color"+id).val();
-		$.ajax({ 
+		$.ajax({
 			type: "POST",
 			url: "menu-main/menu-setting-submenu/cemetery/cemeterymodform.php",
 			data: $("#cemeteryeditform"+id).serialize(),
@@ -1637,32 +1637,32 @@ function mark_it() {
 /*			$("#colorSelector").css('background-color', bgcolor);
 */			$("#cemetery_popup").toggle();
 			}
-		}); 
+		});
 	}
 
 	function delcemetery(id) {
 		if(confirm('Biztosan törli?')) {
-			$.ajax({ 
+			$.ajax({
 				type: "POST",
 				url: "menu-main/menu-setting-submenu/cemetery/cemeterydel.php",
 				data: $("#cemeteryeditform"+id).serialize(),
 				success: function(data){
 				$("#cemetery"+id).html(data);
 				}
-			}); 
+			});
 		}
 	}
 	function addcemeteryTR() {
-		$.ajax({ 
+		$.ajax({
 				type: "POST",
 				url: "menu-main/menu-setting-submenu/cemetery/newcemeteryTR.php",
 				success: function(data){
 				$("#cemetery_popup").html(data);
 				$("#cemetery_popup").toggle();
 				}
-			}); 
+			});
 	}
-	
+
 	///////////////// cemetery.PHP VÉGE /////////////////
 
 
@@ -1676,7 +1676,7 @@ function mark_it() {
 	var flowerprice = document.getElementsByName("flowerprice");
 
 	function editFlower(id) {
-		$.ajax({ 
+		$.ajax({
 			type: "POST",
 			url: "menu-main/menu-setting-submenu/flower/flowermodform.php",
 			data: $("#flowereditform"+id).serialize(),
@@ -1684,31 +1684,31 @@ function mark_it() {
 			$("#floweredit_popup").html(data);
 			$("#floweredit_popup").toggle();
 			}
-		}); 
+		});
 	}
 
 	function delFlower(id) {
 		if(confirm('Biztosan törli?')) {
-			$.ajax({ 
+			$.ajax({
 				type: "POST",
 				url: "menu-main/menu-setting-submenu/flower/flowerdel.php",
 				data: $("#flowereditform"+id).serialize(),
 				success: function(data){
 				$("#flower"+id).html(data);
 				}
-			}); 
+			});
 		}
 	}
-	
+
 	function addFlowerTR() {
-		$.ajax({ 
+		$.ajax({
 			type: "POST",
 			url: "menu-main/menu-setting-submenu/flower/newflowerTR.php",
 			success: function(data){
 			$("#floweredit_popup").html(data);
 			$("#floweredit_popup").toggle();
 			}
-		}); 
+		});
 	}
 
 	///////////////// FLOWEREDIT.PHP VÉGE /////////////////
@@ -1716,18 +1716,18 @@ function mark_it() {
 	///////////////// REFRESH.PHP  /////////////////
 
 	function new_wreath_type() {
-		$.ajax({ 
+		$.ajax({
 			type: "POST",
 			url: "menu-main/menu-setting-submenu/refresh/new_wreathtypeform.php",
 			success: function(data){
 			$("#wreathtype_popup").html(data);
 			$("#wreathtype_popup").toggle();
 			}
-		}); 
+		});
 	}
 
 	///////////////// REFRESH.PHP VÉGE  /////////////////
-	
+
 	///////////////// OUTLAY.PHP  /////////////////
 
 	var outlayid = document.getElementsByName("outlayid");
@@ -1745,14 +1745,14 @@ function mark_it() {
 		modbutton.innerHTML += "<input type='hidden' id='outtype' value = '"+type[id].value+"'> ";
 	}
 	function modOutlay(id) {
-		$.ajax({ 
+		$.ajax({
 			type: "POST",
 			url: "menu-main/menu-setting-submenu/outlay/outlaymod.php",
 			data: $("#outlayform"+id).serialize(),
 			success: function(data){
 			$("#outlay"+id).html(data);
 			}
-		}); 
+		});
 	}
 	function cancelOutlay(id) {
 		var outtype = document.getElementById('outtype').value;
@@ -1770,14 +1770,14 @@ function mark_it() {
 	}
 	function delOutlay(id) {
 		if(confirm('Biztosan törli?')) {
-			$.ajax({ 
+			$.ajax({
 				type: "POST",
 				url: "menu-main/menu-setting-submenu/outlay/outlaydel.php",
 				data: $("#outlayform"+id).serialize(),
 				success: function(data){
 				$("#outlay"+id).html(data);
 				}
-			}); 
+			});
 		}
 	}
 	function addOutlayTR() {
@@ -1789,7 +1789,7 @@ function mark_it() {
 		} else {	// code for IE6, IE5
 			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 		}
-		
+
 		xmlhttp.onreadystatechange = function() {
 			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 				var newRow = outlaytableRef.insertRow(-1);
@@ -1884,19 +1884,19 @@ function mark_it() {
 		var modbutton = document.getElementById('modbutton'+id);
 		modbutton.innerHTML = "<input type='button' onClick='modShops("+id+");' value='Módosít' class='button' >";
 		modbutton.innerHTML += "<input type='hidden' id='isenabled' value = '"+enable[id].value+"'> ";
-		
+
 		var cancelbutton = document.getElementById('cancelbutton'+id);
 		cancelbutton.innerHTML = "<input type='button' onClick='cancelShops("+id+");' value='Mégse' class='button' >";
 	}
 	function modShops(id) {
-		$.ajax({ 
+		$.ajax({
 			type: "POST",
 			url: "menu-main/menu-setting-submenu/shops/shopsmod.php",
 			data: $("#shopsform"+id).serialize(),
 			success: function(data){
 			$("#shops"+id).html(data);
 			}
-		}); 
+		});
 	}
 	function cancelShops(id) {
 		var isenabled = document.getElementById('isenabled').value;
@@ -1919,7 +1919,7 @@ function mark_it() {
 	var tapetext = document.getElementsByName("tapetext");
 
 	function editTape(id) {
-		$.ajax({ 
+		$.ajax({
 			type: "POST",
 			url: "menu-main/menu-setting-submenu/tape_title/tapemodform.php",
 			data: $("#tapeform"+id).serialize(),
@@ -1927,29 +1927,29 @@ function mark_it() {
 			$("#tapetitle_popup").html(data);
 			$("#tapetitle_popup").toggle();
 			}
-		}); 
+		});
 	}
 	function delTape(id) {
 		if(confirm('Biztosan törli?')) {
-			$.ajax({ 
+			$.ajax({
 				type: "POST",
 				url: "menu-main/menu-setting-submenu/tape_title/tapedel.php",
 				data: $("#tapeform"+id).serialize(),
 				success: function(data){
 				$("#tape"+id).html(data);
 				}
-			}); 
+			});
 		}
 	}
 	function addtapeTR() {
-		$.ajax({ 
+		$.ajax({
 			type: "POST",
 			url: "menu-main/menu-setting-submenu/tape_title/newtapeTR.php",
 			success: function(data){
 			$("#tapetitle_popup").html(data);
 			$("#tapetitle_popup").toggle();
 			}
-		}); 
+		});
 	}
 
 	///////////////// TAPE_TITLE.PHP VÉGE /////////////////
@@ -1964,7 +1964,7 @@ function mark_it() {
 			fcolor.disabled = "";
 			$(fcolor).html(data);
 			}
-		}); 
+		});
 	}
 
 	///////////////// FLOWERROW.PHP VÉGE /////////////////
@@ -1978,7 +1978,7 @@ function mark_it() {
 			ftableRef = document.getElementById('flower');
 			ltableRef = document.getElementById('leaf');
 		}
-		
+
 		function loadBaseWreathSizes() {
 			var xmlhttp;
 			var base_wreath_type = document.getElementById("base_wreath_type");
@@ -1988,18 +1988,18 @@ function mark_it() {
 			} else {	// code for IE6, IE5
 				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 			}
-			
+
 			xmlhttp.onreadystatechange = function() {
 				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 					document.getElementById("base_wreath_size").disabled = "";
 					document.getElementById("base_wreath_size").innerHTML=xmlhttp.responseText;
 				}
 			}
-			
+
 			xmlhttp.open("GET","menu-main/menu-setting-submenu/wreath/base_wreath_sizes.php?base_wreath_type=" + base_wreath_type.value,true);
 			xmlhttp.send();
 		}
-		
+
 		function addFlowerRow() {
 			var xmlhttp;
 			var flowernum = document.getElementById('flowernum').value;
@@ -2011,7 +2011,7 @@ function mark_it() {
 			} else {	// code for IE6, IE5
 				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 			}
-			
+
 			xmlhttp.onreadystatechange = function() {
 				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 					var newRow = ftableRef.insertRow(-1);
@@ -2020,7 +2020,7 @@ function mark_it() {
 			}
 
 			xmlhttp.open("GET","menu-main/menu-setting-submenu/wreath/flowerrow.php?flowernum="+flowernum,true);
-			//xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");  
+			//xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 			xmlhttp.send();
 		}
 
@@ -2045,7 +2045,7 @@ function mark_it() {
 			} else {	// code for IE6, IE5
 				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 			}
-			
+
 			xmlhttp.onreadystatechange = function() {
 				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 					var newRow = ltableRef.insertRow(-1);
@@ -2054,7 +2054,7 @@ function mark_it() {
 			}
 
 			xmlhttp.open("GET","menu-main/menu-setting-submenu/wreath/leafrow.php?leafnum="+leafnum,true);
-			//xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");  
+			//xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 			xmlhttp.send();
 		}
 
@@ -2127,7 +2127,7 @@ function mark_it() {
 			} else {	// code for IE6, IE5
 				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 			}
-			
+
 			xmlhttp.onreadystatechange = function() {
 				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 					wreath_price.value=xmlhttp.responseText;
@@ -2135,7 +2135,7 @@ function mark_it() {
 			}
 
 			xmlhttp.open("GET","menu-main/menu-setting-submenu/wreath/calculate.php?wtype=" + wtype + "&wsize=" + wsize + "&"
-				+ query1.join('&') + '&' + query2.join('&') + '&' + query3.join('&')  + "&flowernum=" + flowernum + '&' 
+				+ query1.join('&') + '&' + query2.join('&') + '&' + query3.join('&')  + "&flowernum=" + flowernum + '&'
 				+ query4.join('&') + '&' + query5.join('&') + "&leafnum=" + leafnum + "&rezgo=" + rezgo + "&rezgoqty=" + rezgoqty, true);
 
 			xmlhttp.send();
@@ -2150,13 +2150,13 @@ function mark_it() {
 			} else {	// code for IE6, IE5
 				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 			}
-			
+
 			xmlhttp.onreadystatechange = function() {
 				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 					fullprice.value=xmlhttp.responseText;
 				}
 			}
-			
+
 			xmlhttp.open("GET","menu-main/menu-setting-submenu/wreath/fullprice.php",true);
 			xmlhttp.send();
 		}
@@ -2168,7 +2168,7 @@ function mark_it() {
 				document.getElementById("rezgoqty").disabled = "disabled";
 			}
 		}
-	
+
 		function thumbnail(input) {
 			if (input.files && input.files[0]) {
 				var reader = new FileReader();
@@ -2257,7 +2257,7 @@ function mark_it() {
 									alertwindow.style.display = "block";
 									setTimeout('document.getElementById(\"alertwindow\").style.display = \"none\"', 1500);
 									return false;
-								} 
+								}
 								else {
 									return true;
 								}
@@ -2271,7 +2271,7 @@ function mark_it() {
 	///////////////// WREATHFORM.PHP VÉGE /////////////////
 
 	///////////////// WREATHSEDIT.PHP  /////////////////
-		
+
 		function loadBaseWreathSizes() {
 			var xmlhttp;
 			var base_wreath_type = document.getElementById("base_wreath_type");
@@ -2281,14 +2281,14 @@ function mark_it() {
 			} else {	// code for IE6, IE5
 				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 			}
-			
+
 			xmlhttp.onreadystatechange = function() {
 				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 					document.getElementById("base_wreath_size").disabled = "";
 					document.getElementById("base_wreath_size").innerHTML=xmlhttp.responseText;
 				}
 			}
-			
+
 			xmlhttp.open("GET","menu-main/menu-setting-submenu/wreaths/base_wreath_sizes.php?base_wreath_type=" + base_wreath_type.value,true);
 			xmlhttp.send();
 		}
@@ -2301,19 +2301,19 @@ function mark_it() {
 			} else {	// code for IE6, IE5
 				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 			}
-			
+
 			xmlhttp.onreadystatechange = function() {
 				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 					fcolor.disabled = "";
 					fcolor.innerHTML=xmlhttp.responseText;
 				}
 			}
-			
+
 			xmlhttp.open("GET","menu-main/menu-setting-submenu/wreath/flowercolors.php?flowertype=" + ftype.value,true);
-			//xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");  
+			//xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 			xmlhttp.send();
 		}
-		
+
 		function addFlowerRow() {
 			var xmlhttp;
 			var flowernum = document.getElementById('flowernum').value;
@@ -2325,7 +2325,7 @@ function mark_it() {
 			} else {	// code for IE6, IE5
 				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 			}
-			
+
 			xmlhttp.onreadystatechange = function() {
 				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 					var newRow = ftableRef.insertRow(-1);
@@ -2334,7 +2334,7 @@ function mark_it() {
 			}
 
 			xmlhttp.open("GET","menu-main/menu-setting-submenu/wreaths/flowerrow.php?flowernum="+flowernum,true);
-			//xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");  
+			//xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 			xmlhttp.send();
 		}
 
@@ -2359,7 +2359,7 @@ function mark_it() {
 			} else {	// code for IE6, IE5
 				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 			}
-			
+
 			xmlhttp.onreadystatechange = function() {
 				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 					var newRow = ltableRef.insertRow(-1);
@@ -2368,7 +2368,7 @@ function mark_it() {
 			}
 
 			xmlhttp.open("GET","menu-main/menu-setting-submenu/wreaths/leafrow.php?leafnum="+leafnum,true);
-			//xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");  
+			//xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 			xmlhttp.send();
 		}
 
@@ -2484,7 +2484,7 @@ function mark_it() {
 			} else {	// code for IE6, IE5
 				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 			}
-			
+
 			xmlhttp.onreadystatechange = function() {
 				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 					wreath_price.value=xmlhttp.responseText;
@@ -2492,7 +2492,7 @@ function mark_it() {
 			}
 
 			xmlhttp.open("GET","menu-main/menu-setting-submenu/wreaths/calculate.php?wtype=" + wtype + "&wsize=" + wsize + "&"
-				+ query1.join('&') + '&' + query2.join('&') + '&' + query3.join('&')  + "&flowernum=" + flowernum + '&' 
+				+ query1.join('&') + '&' + query2.join('&') + '&' + query3.join('&')  + "&flowernum=" + flowernum + '&'
 				+ query4.join('&') + '&' + query5.join('&') + "&leafnum=" + leafnum + "&rezgo=" + rezgo + "&rezgoqty=" + rezgoqty, true);
 
 			xmlhttp.send();
@@ -2507,13 +2507,13 @@ function mark_it() {
 			} else {	// code for IE6, IE5
 				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 			}
-			
+
 			xmlhttp.onreadystatechange = function() {
 				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 					fullprice.value=xmlhttp.responseText;
 				}
 			}
-			
+
 			xmlhttp.open("GET","menu-main/menu-setting-submenu/wreaths/fullprice.php",true);
 			xmlhttp.send();
 		}
@@ -2525,7 +2525,7 @@ function mark_it() {
 				document.getElementById("rezgoqty").disabled = "disabled";
 			}
 		}
-	
+
 		function thumbnail(input) {
 			if (input.files && input.files[0]) {
 				var reader = new FileReader();
@@ -2614,7 +2614,7 @@ function mark_it() {
 									document.getElementById('alertwindow').style.display = 'block';
 									setTimeout('document.getElementById(\"alertwindow\").style.display = \"none\"', 1500);
 									return false;
-								} 
+								}
 								else {
 									return true;
 								}
@@ -2638,7 +2638,7 @@ function mark_it() {
 
 
 	function editWreathType(id) {
-		$.ajax({ 
+		$.ajax({
 			type: "POST",
 			url: "menu-main/menu-setting-submenu/wreathtype/wreathtypemodform.php",
 			data: $("#wbeditform"+id).serialize(),
@@ -2646,30 +2646,30 @@ function mark_it() {
 			$("#wreathtype_popup").html(data);
 			$("#wreathtype_popup").toggle();
 			}
-		}); 
+		});
 	}
 
 	function delWreathType(id) {
 		if(confirm('Biztosan törli?')) {
-			$.ajax({ 
+			$.ajax({
 				type: "POST",
 				url: "menu-main/menu-setting-submenu/wreathtype/wreathtypedel.php",
 				data: $("#wbeditform"+id).serialize(),
 				success: function(data){
 				$("#wb"+id).html(data);
 				}
-			}); 
+			});
 		}
 	}
 	function addWreathType() {
-		$.ajax({ 
+		$.ajax({
 			type: "POST",
 			url: "menu-main/menu-setting-submenu/wreathtype/newwreathtypeTR.php",
 			success: function(data){
 			$("#wreathtype_popup").html(data);
 			$("#wreathtype_popup").toggle();
 			}
-		}); 
+		});
 	}
 
 	///////////////// WREATHTYPEEDIT.PHP VÉGE /////////////////
@@ -2681,13 +2681,13 @@ function mark_it() {
 		var newRow = wtableRef.insertRow(-1);
 		var lastRowIndex = wtableRef.rows.length-1;
 		var wreathnum = document.getElementById('wreathnum').value;
-		
+
 		if (lastRowIndex != 0) {
 			wreathnum++;
 		}
 
 		document.getElementById('wreathnum').value = wreathnum;
-		$.ajax({ 
+		$.ajax({
 			type: "GET",
 			url: "menu-main/menu-order-submenu/mod-order/wreathrow.php?wreathnum="+wreathnum,
 			success: function(data){
@@ -2720,7 +2720,7 @@ function mark_it() {
 		newOfferId = prevId.substr(0, prevId.indexOf("/") + 1) + ((newOfferId < 10) ? "0" : "") + newOfferId;
 		$('#offernum').val(parseInt($('#offernum').val())+1);
 
-		$.ajax({ 
+		$.ajax({
 			type: "GET",
 			url: "menu-main/menu-order-submenu/mod-order/offerrow.php?offernum="+$('#offernum').val(),
 			success: function(data){
@@ -2905,7 +2905,7 @@ function mark_it() {
 					$("#end_price").val(data);
 					$("#is_evaluated").val("true"); // kiértékelés megtörtént
 					calcRemainder();
-					
+
 					var price = document.getElementById("end_price").value;
 					price = price.replace(/\s+/g, ''); //kiszedi a space karaketereket
 					price = price.replace("Ft", ''); //kiszedi a "Ft"-ot
@@ -2915,7 +2915,7 @@ function mark_it() {
 
 					document.getElementById("end_price").value = addSpaces(parseInt(price) + parseInt(ship_price));
 				}
-			}); 
+			});
 	}
 
 	///////////////// ORDER-MODIFY.PHP VÉGE /////////////////
@@ -2936,7 +2936,7 @@ function mark_it() {
 				$(newRow).html(data);
 				$("#item_num").val(parseInt($("#item_num").val())+1);
 			}
-		}); 
+		});
 	}
 
 	function delActualShoppingListRow(actual_row) {
@@ -2955,7 +2955,7 @@ function mark_it() {
 				$("#newShopping_list").html(data);
 				$("#newShopping_list").toggle();
 			}
-		}); 
+		});
 	}
 
 	function ShoppingCartList(id) { // bevásárló kosár módosítása
@@ -3000,7 +3000,7 @@ function mark_it() {
 			success: function(data){
 				window.location.href="menu-main/menu-acquisition-submenu/shoppingcart/documents/"+id+"_excel_"+filename+".xls";
 			}
-		}); 
+		});
 	}
 
 	function checkShoppingList() {
@@ -3025,4 +3025,22 @@ function mark_it() {
 				}
 			});
 		}
+	}
+
+	function checkWreathName() {
+		$.ajax({
+			url: "menu-main/menu-setting-submenu/wreaths/checkWreathName.php",
+			type: "POST",
+			data: {
+				wreath_name: $("#wreath_name").val()
+			},
+			success: function(data){
+				$("#wreath_name_error").html(data);
+				if ( $("#wreath_name_error").html() == "") {
+					$("#submit").prop( "disabled", false );
+				} else {
+					$("#submit").prop( "disabled", true );
+				}
+			}
+		});
 	}
