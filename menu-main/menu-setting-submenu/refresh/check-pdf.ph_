@@ -1,0 +1,33 @@
+<?php
+	include '../../pdf-generator/fpdf.php';
+	
+	class PdfWithHeaderAndFooter extends FPDF
+	{
+		function Header() 	// Page header
+		{
+			$this->Image('../../img/logo.png',10,6,11); 		// Logo
+			$this->Cell(5); 		// Move to the right
+			$this->SetFont('Arial','',14); 		// Arial bold 15
+			$this->SetTextColor(216,60,118);     // Text color in gray
+			$this->Ln(13);			
+		}
+
+		function Footer() 	// Page footer
+		{
+			$this->SetY(-15); 		// Position at 1.5 cm from bottom
+			$this->SetFont('Arial','I',8); 		// Arial italic 8
+			$this->SetTextColor(137,165,146);     // Text color in gray
+			$this->Cell(0,10,'oldal '.$this->PageNo().'/{nb}',0,0,'C'); 		// Page number
+		}
+	}
+
+	$pdf = new PdfWithHeaderAndFooter('L','mm','A4');  //Fekvõ A4 mm mért PDF fájl
+	$pdf->SetTitle('fizetesi_adatok.pdf',0);
+	$pdf->SetAuthor('Protea Csoport',0);
+	$pdf->AliasNbPages();	//Lapokszámának beállítása
+	$pdf->AddPage();		//Új oldal hozzáadása
+	
+
+	
+	$pdf->Output();		//PDF fájl generálása
+?>

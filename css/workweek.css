@@ -1,0 +1,136 @@
+.calendar-box {
+	padding: 8px;
+	-background-color: #D0E0C5;
+	border-radius: 6px;
+	background: linear-gradient(to bottom, #D0E0C5 0%, #E8EEEA 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+
+.block-formatting-context {
+	display: inline-block;
+	width: 100%;
+}
+
+.column-left {
+	width: 50%;
+	float: left;
+}
+
+.column-right {
+	margin-left: 50%;
+}
+
+.double-box-wrapper {
+	margin: 10px 4px;
+}
+
+.canvas {
+	margin: 0px 10px;
+	display: block;
+}
+
+.canvas:hover {
+	cursor: pointer;
+}
+
+.week-number {
+	width: 120px;
+}
+
+.right-align {
+	text-align: right;
+}
+
+.button-margin {
+	margin: 0px 10px;
+}
+.canvas-wrap {
+	border: 1px solid black;
+}
+.workweek-title {
+	float: left;
+}
+
+.interval-form {
+	background-color: #FFF;
+	border-radius: 6px;
+}
+
+.quarter {
+	float: left;
+	width: 25%;
+	text-align: center;
+}
+
+.quarter > div {
+	padding: 5px;
+}
+
+.timeInput {
+  background: none repeat scroll 0 0 #FFFFFF;
+  border: 1px solid #ABADB3;
+  border-radius: 2px;
+  color: #999999;
+  cursor: pointer;
+  height: 17px;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+  width: 40px;
+}
+
+.workTime {
+    width: 19px;
+}
+
+button, select {
+	color: #999;
+}
+
+button {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #ABADB3;
+    border-radius: 2px;
+    cursor: pointer;
+    height: 19px;
+    margin: 0 auto;
+    padding: 0 0 5px;
+}
+
+.highlight {
+    color: #FB664B;
+    font-weight: bold;
+}
+
+.set-work-time, .delete-work-time {
+	width: 55px;
+}
+
+.set-work-time {
+	color: #89A583;
+}
+
+.set-work-time:hover {
+	background-color: #89A583;
+	border-color: #89A583;
+	color: #FFF;
+}
+
+.delete-work-time {
+	color: #FB664B;
+}
+
+.delete-work-time:hover {
+	background-color: #FB664B;
+	border-color: #FB664B;
+	color: #FFF;
+}
+
+.button.week-number {
+	background: url("../img/btn-bg2.png") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+	font-size: 16px !important;
+	font-weight: bold !important;
+}
+
+.button.week-number:hover {
+	background: url("../img/btn-bg2.png") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+}

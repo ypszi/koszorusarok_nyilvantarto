@@ -1,0 +1,119 @@
+/* #wreath, #flower, #leaf, #rezgotable, #note, #price */
+
+#wreath, #flower, #leaf, #rezgotable, #note, #price, #ribbon {
+	width: 820px;
+}
+.topborder {
+	border-top: 1px solid #aaa;
+}
+#wreath td, #flower td, #leaf td, #rezgotable td, #note td, #price td, #ribbon td {
+	padding: 3px;
+	padding-top: 10px;
+}
+
+#price td {
+	padding-bottom: 0px;
+}
+
+#flower td {
+	padding-bottom: 20px;
+	width: 240px;
+}
+#rezgotable td {
+	width: 210px;
+} 
+#leaf td {
+	width: 210px;
+}
+
+#img_prev {
+	height: 155px;
+}
+
+.subtotal {
+	position: relative;
+	left: 635px;
+	margin-top: -12px;
+}
+
+input[type=text], textarea {
+	vertical-align: baseline;
+	padding: 1px;
+	border: 1px solid #aaa;
+}
+#submit {
+	background: url(../img/btn-bg2.png) repeat-x 0 0px;
+	color: #fff;
+	width: 85px;
+	height: 30px;
+	cursor: pointer;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+#kiertekeles {
+	background: url(../img/btn-bg1.png) repeat-x 0 0px;
+	color: #fff;
+	width: 85px;
+	height: 30px;
+	cursor: pointer;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.plus {
+	margin-top: -6px;
+	background: url(../img/btn-bg1.png) repeat-x 0 0px;
+	background-color: #ddd;
+	padding: 0px 3px 0px 3px;
+	cursor: pointer;
+	height:30px; 
+	border: 2px outset #fff;
+	color: #fff;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;}
+.minus {
+	margin-top: -6px;
+	background: url(../img/btn-bg2.png) repeat-x 0 0px;
+	background-color: #ddd;
+	padding: 0px 3px 0px 3px;
+	height:30px; 
+	cursor: pointer;
+	border: 2px outset #fff;
+	color: #fff;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;}
+select {
+	width: 210px;
+}
+
+#wreath_price {
+	background-color: #eee;
+}
+
+.db{
+	width: 30px;
+}
+
+.inc_button{
+	margin-top: -5px;
+	width:27px; 
+	height:27px; 
+	background: url(../img/btn-bg1.png) repeat-x 0 0px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.dec_button{
+	margin-top: -5px;
+	width:27px; 
+	height:27px; 
+	background: url(../img/btn-bg2.png) repeat-x 0 0px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}

@@ -1,0 +1,823 @@
+<?php
+	include '../../pdf-generator/fpdf.php';
+
+	$con = new mysqli('localhost', 'koszor01_user', 'Petrik2012', 'koszor01_protea');
+	$con->set_charset('utf8_hungarian_ci');
+	$con->query('SET CHARACTER SET latin2;');
+
+	function create_time($t){
+		if ($t % 2 == 0){
+			return (6+$t/2) . ':00';
+		}else{
+			return (5.5+$t/2) . ':30';
+		}
+	}
+	
+	function myday($d){
+		switch ($d){
+			case 1: 
+				return "Hétfõ";
+				break;
+			case 2: 
+				return "Kedd";
+				break;
+			case 3: 
+				return "Szerda";
+				break;
+			case 4: 
+				return "Csütörtök";
+				break;
+			case 5: 
+				return "Péntek";
+				break;
+			case 6: 
+				return "Szombat";
+				break;
+			case 7: 
+				return "Vasárnap";
+				break;
+		}			
+	}
+	
+		function mymonth($m){
+		switch ($m){
+			case 1: 
+				return "Január";
+				break;
+			case 2: 
+				return "Február";
+				break;
+			case 3: 
+				return "Március";
+				break;
+			case 4: 
+				return "Április";
+				break;
+			case 5: 
+				return "Május";
+				break;
+			case 6: 
+				return "Június";
+				break;
+			case 7: 
+				return "Július";
+				break;
+			case 8: 
+				return "Augusztus";
+				break;
+			case 9: 
+				return "Szeptember";
+				break;
+			case 10: 
+				return "Október";
+				break;
+			case 11: 
+				return "November";
+				break;
+			case 12: 
+				return "December";
+				break;
+		}			
+	}
+
+	class PdfWithHeaderAndFooter extends FPDF
+	{
+		function Header() 	// Page header
+		{
+			$con = new mysqli('localhost', 'koszor01_user', 'Petrik2012', 'koszor01_protea');
+			$con->set_charset('utf8_hungarian_ci');
+			$con->query('SET CHARACTER SET latin2;');
+
+			$this->Image('../../img/logo.png',10,6,15); 		// Logo
+
+
+			$query = "SELECT id,name
+					FROM users;";
+
+			$result = $con->query($query);
+
+			while ($row = mysqli_fetch_array($result)) {
+				$user[$row["id"]]= $row["name"];
+			}
+
+			$query = "SELECT shop,worker_id
+					FROM orders
+					WHERE orders.id=".$_GET['id'].";";
+
+			$result = $con->query($query);
+
+			while ($row = mysqli_fetch_array($result)) {
+				$usr = $user[$row["worker_id"]];
+				
+				switch ($row["shop"]){
+					case 1:
+						$shp = "Koszorúsarok";
+						$shpadd ="1237 Budapest, Temetõ sor 13-al szemben";
+						$addrss1= "Pesterzsébeti Temetõnél a kapuval szemben állva, balra az elsõ üzlet";
+						$addrss2= "";
+						$phone = "mobil +36 20 332 9993";
+						$business ="Protea family Kft.";
+						$bank= "Bankszámla szám: OTP 11720025-20001072";
+						$mail= "email: bolt@koszorusarok.hu";
+						$web = "honlap: www.koszorusarok.hu";
+						break;
+					case 2:
+						$shp = "Protea Virágbolt";
+						$shpadd ="1237 Budapest, Temetõ sor 13-al szemben";
+						$addrss1= "Pesterzsébeti Temetõnél a kapuval szemben állva, balra a második üzlet";
+						$addrss2= "";
+						$phone = "mobil +36 20 457 7143";
+						$business ="Protea Bt.";
+						$bank= "Bankszámla szám: Axa Bank 17000019-11439826";
+						$mail= "email: bolt@proteaviragbolt.hu";
+						$web = "honlap: www.proteaviragbolt.hu";
+						break;
+					case 3:
+						$shp ="Mindszenti õrület";
+						break;
+				}
+			}
+
+			$this->SetFont('Arial','',14); 		// Arial bold 15
+			$this->SetTextColor(216,60,118);     // Text color in gray
+			$this->Cell(18,0,'',0,0,'L'); 		// Title			
+			$this->Cell(0,0,$shp,0,0,'L'); 		// Title			
+
+			$this->SetFont('Arial','',10); 		// Arial bold 15
+			$this->SetTextColor(216,60,118);     // Text color in gray
+			$this->Cell(0,0,$business . " " .$bank,0,0,'R'); 		// Title			
+
+			$this->Ln(4);
+			$this->Ln(0.5);
+
+			$this->SetFont('Arial','I',10); 		// Arial bold 15
+			$this->SetTextColor(0,0,0);
+			$this->Cell(18,0,'',0,0,'L'); 		// Title
+			$this->Cell(0,0,$phone,0,0,'L'); 		// Title			
+
+			$this->SetFont('Arial','',10); 		// Arial bold 15
+			$this->SetTextColor(0,0,0);
+			$this->Cell(0,0,$shpadd,0,0,'R'); 		// Title			
+
+			$this->Ln(4);
+
+			$this->SetFont('Arial','I',10); 		// Arial bold 15
+			$this->SetTextColor(0,0,0);
+			$this->Cell(18,0,'',0,0,'L'); 		// Title			
+			$this->Cell(0,0,$mail,0,0,'L'); 		// Title			
+
+			$this->SetFont('Arial','I',10); 		// Arial bold 15
+			$this->SetTextColor(107,107,107);
+			$this->Cell(0,0,$addrss1,0,0,'R'); 		// Title			
+
+			$this->Ln(4);
+
+			$this->SetFont('Arial','I',10); 		// Arial bold 15
+			$this->SetTextColor(0,0,0);
+			$this->Cell(18,0,'',0,0,'L'); 		// Title			
+			$this->Cell(0,0,$web,0,0,'L'); 		// Title			
+//			$this->Cell(24,0,,0,0,'L'); 		// Title
+
+			$this->SetFont('Arial','I',10); 		// Arial bold 15
+			$this->SetTextColor(107,107,107);
+			$this->Cell(0,0,$addrss2,0,0,'R'); 		// Title			
+			
+			$this->Ln(5);
+			$this->SetDrawColor(0,0,0);
+			$this->Rect(11,$this->GetY(),188,0.1);
+			$this->Rect(11,$this->GetY(),188,0.1);
+			$this->Rect(11,$this->GetY(),188,0.1);
+			$this->SetDrawColor(0,0,0);
+
+			$this->Ln(2);
+		}
+
+		function Footer() 	// Page footer
+		{
+			$con = new mysqli('localhost', 'koszor01_user', 'Petrik2012', 'koszor01_protea');
+			$con->set_charset('utf8_hungarian_ci');
+			$con->query('SET CHARACTER SET latin2;');
+
+			$this->Image('../../img/logo.png',10,6,15); 		// Logo
+
+
+			$query = "SELECT id, print_name
+					FROM users;";
+
+			$result = $con->query($query);
+
+			while ($row = mysqli_fetch_array($result)) {
+				$user[$row["id"]]= $row["print_name"];
+			}
+
+			$query = "SELECT shop,worker_id,create_time
+					FROM orders
+					WHERE orders.id=".$_GET['id'].";";
+
+			$result = $con->query($query);
+
+			while ($row = mysqli_fetch_array($result)) {
+				$usr = $user[$row["worker_id"]];
+				$time = date("Y. F. d. H:i:s",strtotime($row["create_time"]));
+			}
+	
+			$this->SetY(-15); 		// Position at 1.5 cm from bottom
+
+			$this->SetFont('Arial','I',8); 		// Arial italic 8
+
+			$this->SetTextColor(216,60,118);     // Text color in gray
+			$this->Cell(-10,10,$usr . " - " . $time,0,0,'L');
+			$this->SetTextColor(137,165,146);     // Text color in gray
+
+			$this->Cell(0,10,'oldal '.$this->PageNo().'/{nb}',0,0,'C'); 		// Page number
+			
+			$this->Cell(-41,10,'Nyomtatás:',0,0,'R');
+			$this->Cell(-47,10,date("Y. F. d. H:i:s"),0,0,'L');
+		}
+	}
+
+	$pdf = new PdfWithHeaderAndFooter('P','mm','A4');  //Fekvõ A4 mm mért PDF fájl
+	$pdf->SetTitle('rendeles.pdf',0);
+	$pdf->SetAuthor('Protea Csoport',0);
+	$pdf->AliasNbPages();	//Lapokszámának beállítása
+	$pdf->AddPage();		//Új oldal hozzáadása
+	$pdf->Ln(3);
+	
+	$pdf->SetFont('Arial','',14); 		// Arial bold 15
+	$pdf->SetTextColor(216,60,118);     // Text color in gray
+	$pdf->Cell(0,0,'~ Megrendelés ~',0,1,'C'); 		// Title	
+
+	$pdf->Ln(3);
+		
+			
+	if (isset($_GET["id"])){
+		$query = "SELECT *
+		FROM ribbon_type;";
+
+		$result = $con->query($query);
+
+		while ($row = mysqli_fetch_array($result)) {
+			$ribbon_type[$row["type"]]= $row["price"];
+		}
+
+		$query = "SELECT *
+		FROM ribbon_color;";
+
+		$result = $con->query($query);
+
+		while ($row = mysqli_fetch_array($result)) {
+			$ribbon_color[$row["color"]]= $row["price"];
+		}
+
+		
+		$query = "SELECT *
+		FROM orders  
+		WHERE orders.id=".$_GET['id'].";";
+
+		$result = $con->query($query);						
+
+		while ($row = mysqli_fetch_array($result)) {
+			$pdf->SetFont('Arial','',10);
+			$pdf->SetTextColor(216,60,118);
+			$pdf->Cell(0,0,'Megrendelõi információk',0,0,'L');
+			$pdf->Ln(4);
+			
+			$pdf->SetFont('Arial','',9);
+			$pdf->SetTextColor(0,0,0);
+
+			if (isset($row["deadname"]) && $row["deadname"]!= ""){
+				$pdf->SetFont('Arial','',9);
+				$pdf->SetTextColor(98,127,107);
+				$pdf->Cell(24,6,'Elhunyt:',0,0,'R');
+				$pdf->SetFont('Arial','B',11);
+				$pdf->SetTextColor(0,0,0);
+				$pdf->Cell(40,6,'† '.$row["deadname"],0,0,'L');
+			}else{
+				$pdf->Cell(24,6,'',0,0,'R');
+				$pdf->SetFont('Arial','B',9);
+				$pdf->Cell(40,6,'',0,0,'L');			
+			}
+			$pdf->SetFont('Arial','',9);
+			$pdf->SetTextColor(98,127,107);
+			$pdf->Cell(80,6,'Megrendelõ:',0,0,'R');
+			$pdf->SetFont('Arial','',10);
+			$pdf->SetTextColor(0,0,0);
+			$pdf->Cell(40,6,$row["customer_name"],0,1,'L');
+
+			$mydate = date("Y",strtotime($row["ritual_time"])) . " " . mymonth(date("n",strtotime($row["ritual_time"]))) . " " . date("d",strtotime($row["ritual_time"])) . ", " . myday(date("N",strtotime($row["ritual_time"]))) . " - ". date("H:i",strtotime($row["ritual_time"]));
+			$pdf->SetFont('Arial','',9);
+			$pdf->SetTextColor(98,127,107);
+			if (isset($row["shipment"]) && $row["shipment"]!= "Nem kér kiszállítást"){
+				$pdf->Cell(24,6,'Szertartás:',0,0,'R');
+			}else{
+				$pdf->Cell(24,6,'Átvétel idõpontja:',0,0,'R');			
+			}
+			$pdf->SetFont('Arial','',10);
+			$pdf->SetTextColor(0,0,0);
+			$pdf->Cell(40,6,$mydate,0,0,'L');
+			$pdf->SetFont('Arial','',9);
+			$pdf->SetTextColor(98,127,107);
+			$pdf->Cell(80,6,'Telefonszám:',0,0,'R');
+			$pdf->SetFont('Arial','',10);
+			$pdf->SetTextColor(0,0,0);
+			$pdf->Cell(40,6,$row["phone_number"],0,0,'L');
+
+			$pdf->ln(5.5);
+
+			if (isset($row['email']) && $row['email'] != "") {
+				$pdf->Cell(144,6,'E-mail:',0,0,'R');
+				$pdf->Cell(40,6,$row["email"],0,0,'L');
+				$pdf->ln(5.5);
+			}
+
+			$pdf->SetFont('Arial','',9);
+			$pdf->SetTextColor(98,127,107);
+			$pdf->Cell(24,6,'Helyszín:',0,0,'R');
+			$pdf->SetFont('Arial','',10);
+			$pdf->SetTextColor(0,0,0);
+			$pdf->Cell(30,6,$row["shipment"],0,0,'L');
+			if (isset($row['clocation']) && $row['clocation'] != "") {
+				$pdf->SetFont('Arial','',9);
+				$pdf->SetTextColor(98,127,107);
+				$pdf->Cell(14,6,'Cím:',0,0,'R');
+				$pdf->SetFont('Arial','',10);
+				$pdf->SetTextColor(0,0,0);
+				$pdf->Cell(70,6,$row["clocation"].', '.$row["caddress"],0,0,'L');
+			}
+			if (isset($row['cfuneral']) && $row['cfuneral'] != "") {
+				$pdf->ln();
+				$pdf->SetFont('Arial','',9);
+				$pdf->SetTextColor(98,127,107);
+				$pdf->Cell(24,6,'Terem:',0,0,'R');
+				$pdf->SetFont('Arial','',10);
+				$pdf->SetTextColor(0,0,0);
+				$pdf->Cell(40,6,$row["cfuneral"],0,0,'L');
+			}
+			
+			if (isset($row['note']) && $row['note'] != "") {
+				$pdf->Ln(6);
+				$pdf->SetFont('Arial','',9);
+				$pdf->SetTextColor(98,127,107);
+				$pdf->Cell(24,4,'Megjegyzés:',0,0,'R');
+				$pdf->SetFont('Arial','',10);
+				$pdf->SetTextColor(0,0,0);
+				$pdf->MultiCell(140,4,$row["note"],0,'L');
+				$pdf->Ln(-6.5);
+			}
+
+			$pdf->Ln(8);
+			$pdf->SetDrawColor(0,0,0);
+			$pdf->Rect(11,$pdf->GetY(),188,0.1);
+			$pdf->Rect(11,$pdf->GetY(),188,0.1);
+			$pdf->Rect(11,$pdf->GetY(),188,0.1);
+			$pdf->SetDrawColor(0,0,0);
+
+			$query_wreaths = "SELECT COUNT(id) AS cid
+						FROM order_items
+						WHERE order_id='".$row["id"]."' AND is_offer=0";						
+
+			$result_wreaths = $con->query($query_wreaths);
+			$row_wreaths = $result_wreaths->fetch_assoc();
+			$wreath_special_db =  $row_wreaths["cid"];
+
+			if ($wreath_special_db  > 0){
+				$pdf->Ln(4);
+			}
+
+			$query_wreaths = "SELECT *
+						FROM order_items
+						WHERE order_id='".$row["id"]."' AND is_offer=0";						
+
+			$result_wreaths = $con->query($query_wreaths);
+
+			$ind = 1;
+			while ($row_wreaths = mysqli_fetch_array($result_wreaths)) {
+				$query_wreath = "SELECT special_wreath.picture, special_wreath.id,special_wreath.fancy, special_wreath.name, special_wreath.note, special_wreath.calculate_price, special_wreath.sale_price, base_wreath.price, base_wreath.size, base_wreath.note AS base_wreath_note
+				FROM special_wreath,base_wreath
+				WHERE special_wreath.base_wreath_id=base_wreath.id AND special_wreath.name='".$row_wreaths["wreath_name"]."'";
+										
+				$result_wreath = $con->query($query_wreath);
+
+				while ($row_wreath = mysqli_fetch_array($result_wreath)) {
+				
+					$pdf->SetFont('Arial','',9);
+					$pdf->SetTextColor(98,127,107);
+					$pdf->Cell(24,6,''.$ind.'. Koszorú:',0,0,'R');
+					$pdf->SetFont('Arial','',10);
+					$pdf->SetTextColor(0,0,0);
+					$pdf->Cell(20,6,'#'.$row_wreaths["azonosito"],0,0,'L');
+
+					$pdf->Cell(70,6,'- '.$row_wreath["name"] . " " . $row_wreath["fancy"],0,0,'L');
+
+					$pdf->SetFont('Arial','',9); 		
+					$pdf->SetTextColor(98,127,107);
+					$pdf->Cell(24,4,'Alap:',0,0,'R');
+					$pdf->SetFont('Arial','',10); 		
+					$pdf->SetTextColor(0,0,0);
+					$pdf->MultiCell(54,4,$row_wreath["size"].','.$row_wreath["base_wreath_note"],0,'L');
+					$pdf->ln(1);
+
+					$size = getimagesize('../../img/wreath/'.trim($row_wreath["picture"],"|"));
+					if (($size[0]/$size[1]) < 1){
+						$pdf->Image('../../img/wreath/'.trim($row_wreath["picture"],"|"),168,$pdf->GetY()+2,0,28); 		// Kep
+					}else{
+						$pdf->Image('../../img/wreath/'.trim($row_wreath["picture"],"|"),168,$pdf->GetY()+2,28,0); 		// Kep					
+					}
+					if (isset($row_wreath["note"]) && $row_wreath["note"]!=""){
+						$pdf->ln(1.5);
+						$pdf->Cell(24,0,'',0,0,'L');
+						$pdf->SetTextColor(50,50,50);
+						$pdf->SetFont('Arial','I',10);
+						$pdf->MultiCell(128,4,$row_wreath["note"],0,'L');
+						$pdf->ln(1.5);
+					}
+																
+					$query_wreath = "SELECT special_wreath.picture, special_wreath.id,special_wreath.fancy, special_wreath.name, special_wreath.note, special_wreath.calculate_price, special_wreath.sale_price, base_wreath.price, base_wreath.size, base_wreath.note AS base_wreath_note
+								FROM special_wreath,base_wreath
+								WHERE special_wreath.base_wreath_id=base_wreath.id AND special_wreath.name='".$row_wreaths["wreath_name"]."'";
+					
+					$result_wreath = $con->query($query_wreath);
+
+					while ($row_wreath = mysqli_fetch_array($result_wreath)) {
+						$pdf->SetTextColor(98,127,107);
+						$pdf->SetFont('Arial','',9); 		
+						$pdf->Cell(24,6,'Összetevõk:',0,1,'R');
+						$pdf->SetTextColor(0,0,0);
+
+						$query_flowers = "	SELECT flower.type, flower.color, flower.price ,conect_flower_special_wreath.priece 
+											FROM `conect_flower_special_wreath`,`flower` 
+											WHERE conect_flower_special_wreath.special_wreath_id = '".$row_wreath['id']."' AND conect_flower_special_wreath.id_flower = flower.id
+											ORDER BY flower.leaf ASC, conect_flower_special_wreath.priece DESC;";
+					
+						$result_flowers = $con->query($query_flowers);					
+						$pdf->ln(-6.0);
+
+						$pdf->SetFont('Arial','',10);		
+						while ($row_flower = mysqli_fetch_array($result_flowers)) {
+							$pdf->Cell(24,6,'',0,0,'R');
+							$pdf->Cell(25,6,substr($row_flower["type"],0,12),0,0,'L');
+							$pdf->Cell(32,6,$row_flower["color"],0,0,'L');
+							$pdf->Cell(15,6,$row_flower["priece"]. ' db',0,0,'L');
+							$pdf->ln(4.0);
+						}
+						$pdf->ln(7.5);
+						
+						$price=$row_wreath["sale_price"];						
+					}					
+
+					if ($row_wreaths['ribbon_id'] != "") {
+						$query_ribbid = "SELECT * FROM  `ribbons` WHERE id='".$row_wreaths['ribbon_id']."';";
+						$result_ribbid = $con->query($query_ribbid);
+						while ($row_ribbid = mysqli_fetch_assoc($result_ribbid)) {
+							$offer_ribbon_tpye = $row_ribbid['ribbon'];
+							$offer_ribbon_color = $row_ribbid['ribboncolor'];
+
+							$pdf->SetTextColor(98,127,107);
+							$pdf->SetFont('Arial','',9);
+							$pdf->Cell(24,4,'Szalag:',0,0,'R');
+							$pdf->SetTextColor(0,0,0);
+							$pdf->SetFont('Arial','',10);
+							$pdf->Cell(38,4,$row_ribbid["ribbon"],0,0,'L');
+							if ($row_ribbid["farewelltext"] != "SZ0 - Egyedi búcsúszöveg"){
+								$pdf->SetTextColor(98,127,107);
+								$pdf->SetFont('Arial','',9);
+								$pdf->Cell(34,4,'Egyik oldal:',0,0,'R');
+								$pdf->SetTextColor(0,0,0);
+								$pdf->SetFont('Arial','',10);
+								$pdf->MultiCell(61,4,substr($row_ribbid["farewelltext"], strpos($row_ribbid["farewelltext"],"-")+2),0,'L');
+								$pdf->SetTextColor(98,127,107);
+								$pdf->SetFont('Arial','',9);
+								$pdf->Cell(24,4,'Szín:',0,0,'R');
+								$pdf->SetTextColor(0,0,0);
+								$pdf->SetFont('Arial','',10);
+								$pdf->Cell(38,4,$row_ribbid["ribboncolor"],0,0,'L');
+								$pdf->SetTextColor(98,127,107);
+								$pdf->SetFont('Arial','',9);
+								$pdf->Cell(34,4,'Másik oldal:',0,0,'R');
+								$pdf->SetTextColor(0,0,0);
+								$pdf->SetFont('Arial','',10);
+								$pdf->MultiCell(61,4,$row_ribbid["givers"],0,'L');
+							}else{
+								$pdf->SetTextColor(98,127,107);
+								$pdf->SetFont('Arial','',9);
+								$pdf->Cell(34,4,'Egyik oldal:',0,0,'R');
+								$pdf->SetTextColor(0,0,0);
+								$pdf->SetFont('Arial','',10);
+								$pdf->MultiCell(61,4,substr($row_ribbid["givers"], 0, strpos($row_ribbid["givers"],"/")),0,'L');
+								$pdf->SetTextColor(98,127,107);
+								$pdf->SetFont('Arial','',9);
+								$pdf->Cell(24,4,'Szín:',0,0,'R');
+								$pdf->SetTextColor(0,0,0);
+								$pdf->SetFont('Arial','',10);
+								$pdf->Cell(38,4,$row_ribbid["ribboncolor"],0,0,'L');
+								$pdf->SetTextColor(98,127,107);
+								$pdf->SetFont('Arial','',9);
+								$pdf->Cell(34,4,'Másik oldal:',0,0,'R');
+								$pdf->SetTextColor(0,0,0);
+								$pdf->SetFont('Arial','',10);
+								$pdf->MultiCell(61,4,substr($row_ribbid["givers"], strpos($row_ribbid["givers"],"/")+1),0,'L');							
+							}
+						}
+					}else{
+						$pdf->Cell(34,6,'Szalag nélkül kérték!',0,1,'L');
+					}					
+					
+					$ribbonprice = 0;
+					if ($offer_ribbon_tpye != "") {						
+						$pdf->SetFont('Arial','I',9);
+						$pdf->SetTextColor(98,127,107);
+						$pdf->Cell(24,6,'Koszorú ár:',0,0,'R');
+						$pdf->SetTextColor(107,107,107);
+						$pdf->SetFont('Arial','BI',10);
+						$ribbonprice = $ribbon_type[$offer_ribbon_tpye]+$ribbon_color[$offer_ribbon_color];
+						$ribbonprice = $row_ribbid["price"];
+						$pdf->Cell(18,6,number_format($price, 0, ',', ' ') .' Ft',0,0,'L');
+						$pdf->SetFont('Arial','I',9);
+						$pdf->SetTextColor(98,127,107);
+						$pdf->Cell(21,6,'+ Szalag ára:',0,0,'L');
+						$pdf->SetFont('Arial','BI',10);
+						$pdf->SetTextColor(107,107,107);
+						$pdf->Cell(16,6,number_format($ribbonprice, 0, ',', ' ') .' Ft',0,0,'L');
+						$pdf->SetFont('Arial','I',9);
+						$pdf->SetTextColor(98,127,107);
+						$pdf->Cell(90,6,'Ár:',0,0,'R');
+					}else{
+						$pdf->SetFont('Arial','I',9);
+						$pdf->SetTextColor(98,127,107);
+						$pdf->Cell(168,6,'Ár:',0,0,'R');
+					}
+					
+					$pdf->SetFont('Arial','BI',12);
+					$pdf->SetTextColor(0,0,0);
+					$pdf->Cell(19,6,number_format($price + $ribbonprice, 0, ',', ' ') .' Ft',0,1,'R');	
+					
+					$pdf->SetDrawColor(107,107,107);
+					$pdf->Rect(11,$pdf->GetY(),188,0.1);
+					$pdf->SetDrawColor(0,0,0);
+					$pdf->ln(2);
+				}
+				$ind++;
+			}
+
+			$query_wreaths = "SELECT COUNT(id) AS cid
+						FROM order_items
+						WHERE order_id='".$row["id"]."' AND is_offer=1";						
+
+			$result_wreaths = $con->query($query_wreaths);
+			$row_wreaths = $result_wreaths->fetch_assoc();
+
+			$wreath_offer_db =  $row_wreaths["cid"];
+
+			if ($wreath_offer_db  > 0){
+				$pdf->Ln(2);
+			}
+
+			$query_wreaths = "SELECT *
+			FROM order_items
+			WHERE order_id='".$row["id"]."' AND is_offer=1";
+						
+			$result_wreaths = $con->query($query_wreaths);
+
+			while ($row_wreaths = mysqli_fetch_array($result_wreaths)) {
+
+				$query_wreath = "SELECT offer_wreath.left_for_us, offer_wreath.id, offer_wreath.name, offer_wreath.note, offer_wreath.calculate_price, offer_wreath.sale_price, base_wreath.price, base_wreath.size, base_wreath.note AS base_wreath_note
+				FROM offer_wreath,base_wreath
+				WHERE offer_wreath.base_wreath_id=base_wreath.id AND offer_wreath.name='".$row_wreaths["wreath_name"]."'";
+	
+				$result_wreath = $con->query($query_wreath);
+
+				while ($row_wreath = mysqli_fetch_array($result_wreath)) {
+				
+					$pdf->SetFont('Arial','',9);
+					$pdf->SetTextColor(98,127,107);
+					$pdf->Cell(24,4,''.$ind.'. Koszorú:',0,0,'R');
+					$pdf->SetFont('Arial','',10);
+					$pdf->SetTextColor(0,0,0);
+					$pdf->Cell(20,4,'#'.$row_wreaths["azonosito"],0,0,'L');
+
+					$pdf->Cell(70,4,'- '.$row_wreath["name"],0,0,'L');
+
+					$pdf->SetFont('Arial','',9); 		
+					$pdf->SetTextColor(98,127,107);
+					$pdf->Cell(24,4,'Alap:',0,0,'R');
+					$pdf->SetFont('Arial','',10); 		
+					$pdf->SetTextColor(0,0,0);
+					$pdf->MultiCell(54,4,$row_wreath["size"].','.$row_wreath["base_wreath_note"],0,'L');
+					$pdf->ln(1);
+
+//					$pdf->Cell(34,6,$row_wreath["size"].','.$row_wreath["base_wreath_note"],0,1,'L');	
+
+					if (isset($row_wreath["note"]) && $row_wreath["note"]!=""){
+						$pdf->ln(1.5);
+						$pdf->Cell(24,0,'',0,0,'L');
+						$pdf->SetTextColor(50,50,50);
+						$pdf->SetFont('Arial','I',10);
+						$pdf->MultiCell(163,4,$row_wreath["note"],0,'L');
+						$pdf->ln(1.5);
+					}
+
+					$pdf->SetTextColor(98,127,107);
+					$pdf->SetFont('Arial','',9); 		
+					$pdf->Cell(24,6,'Összetevõk:',0,1,'R');
+
+					$pdf->ln(-6.0);
+					$pdf->SetTextColor(0,0,0);
+
+
+					$offer_ribbon_tpye = "";
+					$offer_ribbon_color = "";
+
+					if ($row_wreaths['ribbon_id'] != "") {
+						$query_ribbid = "SELECT * FROM  `ribbons` WHERE id='".$row_wreaths['ribbon_id']."';";
+						$result_ribbid = $con->query($query_ribbid);
+						while ($row_ribbid = mysqli_fetch_assoc($result_ribbid)) {
+							$offer_ribbon_tpye = $row_ribbid['ribbon'];
+							$offer_ribbon_color = $row_ribbid['ribboncolor'];
+						}
+					}
+				
+					$ribbonprice = 0;
+					if ($offer_ribbon_tpye != "") {						
+						$ribbonprice = $ribbon_type[$offer_ribbon_tpye]+$ribbon_color[$offer_ribbon_color];
+					}
+
+
+					if (isset($row_wreath["left_for_us"]) &&  $row_wreath["left_for_us"] == 1){
+						$pdf->SetFont('Arial','B',10); 		
+						$pdf->Cell(24,6,'',0,0,'R');
+						$pdf->Cell(25,6,"Koszorú kötõre bízva az összeállítás, " . ($row_wreath[sale_price] - $row_wreath[price] - $ribbonprice) . " ft értékben tartalmazhat virágot.",0,1,'L');
+					}else{
+						$query_flowers = "	SELECT flower.type, flower.color, flower.price ,conect_flower_offer_wreath.priece 
+											FROM `conect_flower_offer_wreath`,`flower` 
+											WHERE conect_flower_offer_wreath.offer_wreath_id = '".$row_wreath['id']."' AND conect_flower_offer_wreath.id_flower = flower.id
+											ORDER BY flower.leaf ASC, flower.type ASC;";
+
+						$result_flowers = $con->query($query_flowers);
+
+						$pdf->SetFont('Arial','',10);		
+						while ($row_flower = mysqli_fetch_array($result_flowers)) {
+							$pdf->Cell(24,6,'',0,0,'R');
+							$pdf->Cell(25,6,substr($row_flower["type"],0,12),0,0,'L');
+							$pdf->Cell(32,6,$row_flower["color"],0,0,'L');
+
+							if (($row_flower["priece"] * 100) % 100  == 0 ){
+								$pdf->Cell(15,6, round($row_flower["priece"],0) . ' db',0,0,'R');
+							}else{
+								$pdf->Cell(15,6, $row_flower["priece"] . ' db',0,0,'R');
+							}
+
+							$pdf->ln(4.0);
+						}
+						$pdf->ln(3.5);
+					}
+										
+			
+					$pdf->SetFont('Arial','',10);
+					$pdf->SetTextColor(0,0,0);
+					
+					$offer_ribbon_tpye = "";
+					$offer_ribbon_color = "";
+
+					if ($row_wreaths['ribbon_id'] != "") {
+						$query_ribbid = "SELECT * FROM  `ribbons` WHERE id='".$row_wreaths['ribbon_id']."';";
+						$result_ribbid = $con->query($query_ribbid);
+						while ($row_ribbid = mysqli_fetch_assoc($result_ribbid)) {
+							$offer_ribbon_tpye = $row_ribbid['ribbon'];
+							$offer_ribbon_color = $row_ribbid['ribboncolor'];
+
+							$pdf->SetTextColor(98,127,107);
+							$pdf->SetFont('Arial','',9);
+							$pdf->Cell(24,4,'Szalag:',0,0,'R');
+							$pdf->SetTextColor(0,0,0);
+							$pdf->SetFont('Arial','',10);
+							$pdf->Cell(38,4,$row_ribbid["ribbon"],0,0,'L');
+							if ($row_ribbid["farewelltext"] != "SZ0 - Egyedi búcsúszöveg"){
+								$pdf->SetTextColor(98,127,107);
+								$pdf->SetFont('Arial','',9);
+								$pdf->Cell(34,4,'Egyik oldal:',0,0,'R');
+								$pdf->SetTextColor(0,0,0);
+								$pdf->SetFont('Arial','',10);
+								$pdf->MultiCell(91,4,substr($row_ribbid["farewelltext"], strpos($row_ribbid["farewelltext"],"-")+2),0,'L');
+								$pdf->SetTextColor(98,127,107);
+								$pdf->SetFont('Arial','',9);
+								$pdf->Cell(24,4,'Szín:',0,0,'R');
+								$pdf->SetTextColor(0,0,0);
+								$pdf->SetFont('Arial','',10);
+								$pdf->Cell(38,4,$row_ribbid["ribboncolor"],0,0,'L');
+								$pdf->SetTextColor(98,127,107);
+								$pdf->SetFont('Arial','',9);
+								$pdf->Cell(34,4,'Másik oldal:',0,0,'R');
+								$pdf->SetTextColor(0,0,0);
+								$pdf->SetFont('Arial','',10);
+								$pdf->MultiCell(91,4,$row_ribbid["givers"],0,'L');
+							}else{
+								$pdf->SetTextColor(98,127,107);
+								$pdf->SetFont('Arial','',9);
+								$pdf->Cell(34,4,'Egyik oldal:',0,0,'R');
+								$pdf->SetTextColor(0,0,0);
+								$pdf->SetFont('Arial','',10);
+								$pdf->MultiCell(91,4,substr($row_ribbid["givers"], 0, strpos($row_ribbid["givers"],"/")),0,'L');
+								$pdf->SetTextColor(98,127,107);
+								$pdf->SetFont('Arial','',9);
+								$pdf->Cell(24,4,'Szín:',0,0,'R');
+								$pdf->SetTextColor(0,0,0);
+								$pdf->SetFont('Arial','',10);
+								$pdf->Cell(38,4,$row_ribbid["ribboncolor"],0,0,'L');
+								$pdf->SetTextColor(98,127,107);
+								$pdf->SetFont('Arial','',9);
+								$pdf->Cell(34,4,'Másik oldal:',0,0,'R');
+								$pdf->SetTextColor(0,0,0);
+								$pdf->SetFont('Arial','',10);
+								$pdf->MultiCell(91,4,substr($row_ribbid["givers"], strpos($row_ribbid["givers"],"/")+1),0,'L');							
+							}
+						}
+					}else{
+						$pdf->Cell(34,6,'Szalag nélkül kérték!',0,1,'L');
+					}					
+				
+					$ribbonprice = 0;
+					if ($offer_ribbon_tpye != "") {						
+						$pdf->SetFont('Arial','I',9);
+						$pdf->SetTextColor(98,127,107);
+						$pdf->Cell(24,6,'Koszorú ár:',0,0,'R');
+						$pdf->SetTextColor(107,107,107);
+						$pdf->SetFont('Arial','BI',10);
+						$ribbonprice = $ribbon_type[$offer_ribbon_tpye]+$ribbon_color[$offer_ribbon_color];
+						$pdf->Cell(18,6,number_format($row_wreath["sale_price"] - $ribbonprice, 0, ',', ' ') .' Ft',0,0,'L');
+						$pdf->SetFont('Arial','I',9);
+						$pdf->SetTextColor(98,127,107);
+						$pdf->Cell(21,6,'+ Szalag ára:',0,0,'L');
+						$pdf->SetFont('Arial','BI',10);
+						$pdf->SetTextColor(107,107,107);
+						$pdf->Cell(16,6,number_format($ribbonprice, 0, ',', ' ') .' Ft',0,0,'L');
+						$pdf->SetFont('Arial','I',9);
+						$pdf->SetTextColor(98,127,107);
+						$pdf->Cell(90,6,'Ár:',0,0,'R');
+					}else{
+						$pdf->SetFont('Arial','I',9);
+						$pdf->SetTextColor(98,127,107);
+						$pdf->Cell(168,6,'Ár:',0,0,'R');
+					}
+					
+					$pdf->SetFont('Arial','BI',12);
+					$pdf->SetTextColor(0,0,0);
+					$pdf->Cell(19,6,number_format($row_wreath["sale_price"], 0, ',', ' ') .' Ft',0,1,'R');
+									
+					$pdf->SetDrawColor(107,107,107);
+					$pdf->Rect(11,$pdf->GetY(),188,0.1);
+					$pdf->SetDrawColor(0,0,0);
+					$pdf->ln(2);
+				}
+				$ind++;
+
+			}
+			
+			$pdf->Ln(2);
+			$pdf->SetFont('Arial','',10);
+			$pdf->SetTextColor(216,60,118); //(98,127,107);
+			$pdf->Cell(0,0,'Fizetési információk',0,0,'L');
+			$pdf->Ln(4);
+
+			$pdf->SetFont('Arial','',10); 		
+			$pdf->SetTextColor(70,70,70);
+			if ($row['paid'] != Null) {
+				$pdf->Cell(146,6,'Végösszeg:',0,0,'R');
+
+				$pdf->SetFont('Arial','BI',12);
+				$pdf->SetTextColor(0,0,0);
+				$pdf->Cell(20,6,number_format($row["price"], 0, '', ' ').' Ft',0,0,'R');
+				$pdf->Cell(22,6,' (FIZETVE)',0,1,'R');
+			}else {
+				$pdf->SetFont('Arial','',10);
+				$pdf->SetTextColor(70,70,70);
+				$pdf->Cell(30,6,'Szállítási költség:',0,0,'R');
+				$pdf->SetFont('Arial','BI',12);
+				$pdf->SetTextColor(98,127,107);
+				$pdf->Cell(20,6,number_format($row["ship_price"], 0, '', ' ').' Ft',0,0,'L');
+
+				$pdf->SetFont('Arial','',10);
+				$pdf->SetTextColor(70,70,70);
+				$pdf->Cell(10,6,'Elõleg:',0,0,'R');
+				$pdf->SetFont('Arial','BI',12);
+				$pdf->SetTextColor(98,127,107);
+				$pdf->Cell(25,6,number_format($row["downprice"], 0, '', ' ').' Ft',0,0,'L');
+
+				$pdf->SetFont('Arial','',10);
+				$pdf->SetTextColor(70,70,70);
+				$pdf->Cell(15,6,'Hátralék:',0,0,'R');
+				$pdf->SetFont('Arial','BI',12);
+				$pdf->SetTextColor(98,127,107);
+				$pdf->Cell(25,6,number_format(($row["price"]-$row['downprice']), 0, '', ' ').' Ft',0,0,'L');
+				
+				$pdf->Cell(42,6,'Végösszeg:',0,0,'R');
+				$pdf->SetFont('Arial','BI',12);
+				$pdf->SetTextColor(0,0,0);
+				$pdf->Cell(25,6,number_format($row["price"], 0, '', ' ').' Ft',0,1,'L');
+
+			}
+		}		
+		$con->close();
+	}
+			
+	$pdf->Output();		//PDF fájl generálása			
+?>

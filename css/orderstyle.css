@@ -1,0 +1,95 @@
+.data{
+	padding: 6px 3px 6px 3px;
+	margin-right: 30px;
+	color: #89a583;
+	font: bold 14px Arial;
+}
+input[type=text], textarea {
+	vertical-align: baseline;
+	padding: 1px;
+	border: 1px solid #aaa;
+}
+.plus {
+	margin-top: -3px;
+	background: url(../img/btn-bg1.png) repeat-x 0 0px;
+	background-color: #ddd;
+	padding: 0px 3px 0px 3px;
+	cursor: pointer;
+	border: 2px outset #fff;
+	height: 24px;
+	color: #fff;
+}
+.minus {
+	margin-top: -3px;
+	background: url(../img/btn-bg2.png) repeat-x 0 0px;
+	background-color: #ddd;
+	padding: 0px 3px 0px 3px;
+	cursor: pointer;
+	border: 2px outset #fff;
+	height: 24px;
+	color: #fff;
+}
+.backward {
+	background: url(../img/btn-bg1.png) repeat-x 0 0px;
+	color: #fff;
+	width: 85px;
+	height: 30px;
+	cursor: pointer;
+}
+.forward {
+	background: url(../img/btn-bg2.png) repeat-x 0 0px;
+	color: #fff;
+	width: 85px;
+	height: 30px;
+	cursor: pointer;
+}
+
+#order_steps {
+	width: 880px;
+	height: 56px;
+	overflow: hidden;
+	margin: 20px 0 0 0;
+	background-image: url(../img/order_steps.png);
+	background-repeat: no-repeat;
+	background-position: 50% 0%;
+}
+
+ul.step1 {background-position:0 0;}
+
+ul.step2 {background-position:0 -56px;}
+
+ul.step3 {background-position:0 -112px;}
+
+ul.step4 {background-position:0 -168px;}
+
+ul.step5 {background-position:0 -224px;}
+
+#order_steps li {width: 275px;height:56px;float:left;cursor: pointer;}
+
+#order_steps li a,
+
+#order_steps li span {width:130px;height:22px;display:block;padding:34px 0 0 10px;font:normal 12px "Arial";}
+
+#order_steps li span {color:#a1a1a1; font-weight:bold;}
+
+#order_steps li.step_current span {font-weight:bold;color:#fff;}
+
+#order_steps li a {font-weight:bold;color:#ccc;text-decoration:none;}
+
+#order_steps li a:hover {color:#fff;}
+
+select {
+	width: 230px;
+}
+
+table td {
+	padding: 5px;
+}
+
+.order_table td {
+	width: 50%;
+}
+
+.order_table_shipment td {
+	width: 420px;
+}

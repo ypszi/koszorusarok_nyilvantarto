@@ -1,0 +1,144 @@
+<?php
+function create_time($t){
+	if ($t % 2 == 0){
+		echo '<span>' . (6+$t/2) . '<sup>00</sup></span>';
+	}else{
+		echo '<span>' . (6+$t/2) . '<sup>00</sup></span>';
+	}
+}
+?>
+
+<div class="title">
+	<span class="firstWord">Fizetési </span> Adatok
+		<div>	
+
+<div class="title">
+	<?php 
+		
+		if (isset($_GET['week'])){
+			$week += $_GET['week'];
+		}else{
+			$week = 0;
+		}
+		
+		$time = strtotime("1 January ".date("Y"), time());
+		$time += ((7*(date("W")-1+$week))+1-date('w', $time))*24*3600;
+
+		$first_day_in_week = date('Y-m-d', $time - 2*24*3600);
+		$last_day_in_week = date('Y-m-d',($time + 4*24*3600));
+		
+		$selectedweek = date("W")+$week;
+
+		echo $selectedweek .'. hét - <span class="firstWord">'.$first_day_in_week.' Szombat 6<sup>00</sup> - '. $last_day_in_week .' Péntek 20<sup>00</sup></span>';	
+		echo '<span class="next_week" style="float:right;">
+				<a href="?page=statisztika&subpage=fizetes&week='. ($week-1) .'">elöző</a> | 
+				<a href="?page=statisztika&subpage=fizetes&week=0">aktualis hét</a> | 
+				<a href="?page=statisztika&subpage=fizetes&week='. ($week+1) .'">következő</a>
+			</span>';
+	?>
+</div>		
+		
+<?php 
+	
+	$query="SELECT user,(SUM(end-begin)/2) AS munkaora FROM workweek1 WHERE (week=". ($selectedweek-1)." AND (day between 5 AND 6)) OR (week=". $selectedweek ." AND (day between 0 AND 4)) GROUP BY user";
+					
+	$result = mysql_query($query) or die (mysql_error());
+	while ($row = mysql_fetch_assoc($result)) {
+		$salary[$row["user"]] += $row['munkaora'];
+	}
+
+	$query="SELECT user,(SUM(end-begin)/2) AS munkaora FROM workweek2 WHERE (week=". ($selectedweek-1)." AND (day between 5 AND 6)) OR (week=". $selectedweek ." AND (day between 0 AND 4)) GROUP BY user";
+					
+	$result = mysql_query($query) or die (mysql_error());
+	while ($row = mysql_fetch_assoc($result)) {
+		$salary[$row["user"]] += $row['munkaora'];
+	}
+
+	$days = array(0 => 5, 1 => 6, 2 => 0, 3 => 1, 4 => 2, 5 => 3, 6 => 4);
+	
+	$users="SELECT id,name,color,salary FROM users WHERE id!=1 AND id!=2 AND id !=3 ORDER BY name ASC;";
+	$result = mysql_query($users) or die (mysql_error());
+	echo '<table id="salary">
+			<tr>
+				<th></th>
+				<th>Név</th>
+				<th>Szombat</th>
+				<th>Vasárnap</th>
+				<th>Hétfő</th>
+				<th>Kedd</th>
+				<th>Szerda</th>
+				<th>Csütörtök</th>
+				<th>Péntek</th>
+			</tr>';
+
+		while ($row = mysql_fetch_assoc($result)) {
+			echo '<tr>
+				<td><div style="float:right; margin:2px 5px 0px 0px; height:10px; width:10px; background-color: #' . $row["color"] . ';">&nbsp;</div></td>
+				<td>' . $row["name"] . '</td>';
+				
+			
+				for ($shop = 1; $shop<3; $shop++){
+					$query_workdays = "SELECT week,day,user,begin,end 
+					   FROM workweek".$shop." 
+					   WHERE user=".$row["id"]." AND ((week=".($selectedweek-1)." AND (day between 5 AND 6)) OR (week=".($selectedweek)." AND (day between 0 AND 4))) 
+					   ORDER BY week,day ASC;";
+					
+					$result_workdays = mysql_query($query_workdays) or die (mysql_error());
+	
+					for ($d=0; $d<7; $d++){
+						$sal[$d]= "";
+					}
+
+					while ($row_wd = mysql_fetch_assoc($result_workdays)) {
+						$sal[$row_wd["day"]] = '<div style="font:bold 12px/20px Arial;">' . create_time($row_wd["begin"]) . ' - ' . create_time($row_wd["end"]) . '</div>'; 
+					}
+
+					for ($d=0; $d<7; $d++){
+						echo '<td>ss';
+						echo $sal[$d];
+						echo '</td>';
+					}
+
+/*
+					$i = -1;
+					while ($row_wd = mysql_fetch_assoc($result_workdays)) {
+						echo '<td>s';
+						$i++; 
+											 
+						if ($days[$i] == $row_wd["day"]){
+							echo '<div style="font:bold 12px/20px Arial;">'; 
+							create_time($row_wd["begin"]); 
+							echo ' - '; 
+							create_time($row_wd["end"]);
+							echo '</div>'; 
+						}
+
+						echo '</td>';
+
+						
+						while ($days[$i] != $row_wd["day"]){
+							echo '<td>&nbsp;f</td>'; 
+							$i++;
+						}
+						
+					}
+*/					
+				}
+			echo '</tr>
+					<tr style="height:30px;">
+						<td colspan="9" style="text-align: right;">
+							<p>Heti munkaóra, fizetés: ';
+				if (isset($salary[$row["id"]])){
+					echo  $salary[$row["id"]] . ' óra - <i>' . number_format($row["salary"], 0, ',', ' ') .' ft/óra </i> - <span style="font-weight:bold; color: #fb664b">' . number_format($salary[$row["id"]]*$row["salary"], 0, ',', ' ') .' ft</span>';
+				}else{
+					echo '0 óra, 0 ft';
+				}
+				
+					echo '</p>
+						</td>
+					</tr>';
+	}
+		echo '</table>';	
+?>
+		</div>
+</div>
