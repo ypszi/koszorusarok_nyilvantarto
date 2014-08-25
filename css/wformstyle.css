@@ -6,7 +6,7 @@
 .topborder {
 	border-top: 1px solid #aaa;
 }
-#wreath td, #flower td, #leaf td, #rezgotable td, #note td, #price td, #ribbon td {
+#wreath td, #flower td, #leaf td, #rezgotable td, #note td, #gallery td, #price td, #ribbon td {
 	padding: 3px;
 	padding-top: 10px;
 }
@@ -21,12 +21,12 @@
 }
 #rezgotable td {
 	width: 210px;
-} 
+}
 #leaf td {
 	width: 210px;
 }
 
-#img_prev {
+#img_prev, #img_prev2 {
 	height: 155px;
 }
 
@@ -68,7 +68,7 @@ input[type=text], textarea {
 	background-color: #ddd;
 	padding: 0px 3px 0px 3px;
 	cursor: pointer;
-	height:30px; 
+	height:30px;
 	border: 2px outset #fff;
 	color: #fff;
 	-webkit-border-radius: 3px;
@@ -79,7 +79,7 @@ input[type=text], textarea {
 	background: url(../img/btn-bg2.png) repeat-x 0 0px;
 	background-color: #ddd;
 	padding: 0px 3px 0px 3px;
-	height:30px; 
+	height:30px;
 	cursor: pointer;
 	border: 2px outset #fff;
 	color: #fff;
@@ -100,8 +100,8 @@ select {
 
 .inc_button{
 	margin-top: -5px;
-	width:27px; 
-	height:27px; 
+	width:27px;
+	height:27px;
 	background: url(../img/btn-bg1.png) repeat-x 0 0px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
@@ -110,8 +110,8 @@ select {
 
 .dec_button{
 	margin-top: -5px;
-	width:27px; 
-	height:27px; 
+	width:27px;
+	height:27px;
 	background: url(../img/btn-bg2.png) repeat-x 0 0px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;

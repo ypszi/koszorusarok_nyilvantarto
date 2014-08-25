@@ -2185,6 +2185,22 @@ function mark_it() {
 			}
 		}
 
+		function thumbnail2(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+
+					reader.onload = function (e) {
+					$('#img_prev2')
+					.attr('src', e.target.result)
+					.height(155)
+					.width(155);
+				};
+
+				reader.readAsDataURL(input.files[0]);
+				document.getElementById('img_prev2').style.visibility = 'visible';
+			}
+		}
+
 		function dataCheck() {
 			var alertwindow = document.getElementById('alertwindow');
 			var wreath_name = document.getElementById('wreath_name').value;

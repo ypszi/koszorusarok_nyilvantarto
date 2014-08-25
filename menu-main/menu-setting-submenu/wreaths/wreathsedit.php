@@ -285,6 +285,37 @@
 				</td>
 			</tr>
 		</table>
+
+		<table id="gallery" style="border-style:solid; border-left-width:15px; border-color: #509690; margin-top: 5px; width: 730px;">
+			<tr class="topborder">
+				<td style="font: normal 16px/18px 'Arial'; color: #89a583;"> Képek feltöltése:
+					<input type="file" name="swreath_img_gallery[]" id="swreath_img_gallery" onchange="thumbnail2(this);" multiple>
+				</td>
+				<td style="font: normal 16px/18px 'Arial'; color: #89a583;"> Galéria:
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<img id="img_prev2" src="#" alt="Feltöltendő kép" style="visibility: hidden;">
+				</td>
+				<td>
+					<?php
+						$query = "SELECT id FROM special_wreath WHERE name LIKE '".$_GET['wreath']."' LIMIT 0,1";
+						$result = mysql_query($query) or die (mysql_error());
+						while ($row = mysql_fetch_assoc($result)) {
+							$id = $row['id'];
+						}
+
+						$query = "SELECT url FROM `special_wreath_img` WHERE special_wreath_id = $id";
+						$result = mysql_query($query) or die (mysql_error());
+						while ($row = mysql_fetch_assoc($result)) {
+							echo '<img src="'.$row['url'].'" style="width: 120px; margin: 0 5px 5px 0;">';
+						}
+					?>
+				</td>
+			</tr>
+		</table>
+
 		<?php
 			$orig_sale_price_sql = "SELECT sale_price FROM special_wreath WHERE name = '" . $_GET['wreath'] . "' LIMIT 0,1";
 			$result = mysql_query($orig_sale_price_sql) or die (mysql_error());

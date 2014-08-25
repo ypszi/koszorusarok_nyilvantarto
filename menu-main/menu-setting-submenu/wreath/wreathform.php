@@ -116,14 +116,29 @@
 		<table id="note" style="border-style:solid; border-left-width:15px; border-color:#5f7f71; margin-top: 5px; width: 730px;">
 			<tr class="topborder">
 				<td style="font: normal 16px/18px 'Arial'; color: #89a583;"> Kép feltöltése:
-					<input type="file" name="swreath_img[]" id="swreath_img" onChange="thumbnail(this);" multiple>
+					<input type="file" name="swreath_img" id="swreath_img" onChange="thumbnail(this);">
+				</td>
+				<td style="font: normal 16px/18px 'Arial'; color: #89a583;"> Elsődleges kép:
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<img id="img_prev" src="#" alt="Feltöltendő kép" style="visibility: hidden;">
+				</td>
+			</tr>
+		</table>
+
+		<table id="gallery" style="border-style:solid; border-left-width:15px; border-color: #509690; margin-top: 5px; width: 730px;">
+			<tr class="topborder">
+				<td style="font: normal 16px/18px 'Arial'; color: #89a583;"> Képek feltöltése:
+					<input type="file" name="swreath_img_gallery[]" id="swreath_img_gallery" onchange="thumbnail2(this);" multiple>
 				</td>
 				<td style="font: normal 16px/18px 'Arial'; color: #89a583;"> Galéria:
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<img id="img_prev" src="#" alt="Feltöltendő kép" style="visibility: hidden;">
+					<img id="img_prev2" src="#" alt="Feltöltendő kép" style="visibility: hidden;">
 				</td>
 			</tr>
 		</table>
