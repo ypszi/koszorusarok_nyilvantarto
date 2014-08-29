@@ -207,8 +207,18 @@
 								document.getElementById('alertwindow').style.display = 'block';
 								</script>";
 						} else {
-							// ha már létezik a fájl, akkor töröljük
-							unlink( $target . $filename );
+
+							$query_url = "SELECT url FROM `special_wreath_img` WHERE `special_wreath_id`=$wreath_id";
+							$result_url = mysql_query($query_url) or die (mysql_error());
+
+							while ($row = mysql_fetch_assoc($result_url)) {
+								unlink( $target . basename($row['url']) );
+							}
+
+							if (file_exists($target . $filename)) {
+								unlink( $target . $filename );
+							}
+
 							$filenames[] = $filename;
 							move_uploaded_file($ftmp_name, $target . $filename);
 							echo "<script type=\"text/javascript\">
@@ -266,13 +276,6 @@
 			}
 
 			if (!empty($filenames)) {
-
-				$query_url = "SELECT url FROM `special_wreath_img` WHERE `special_wreath_id`=$wreath_id";
-				$result_url = mysql_query($query_url) or die (mysql_error());
-
-				while ($row = mysql_fetch_assoc($result_url)) {
-					unlink( "../../../img/gallery/".basename($row['url']) );
-				}
 
 				$query_del = "DELETE FROM `special_wreath_img` WHERE `special_wreath_id`=$wreath_id";
 				$result_del = mysql_query($query_del) or die (mysql_error());
