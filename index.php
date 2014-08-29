@@ -9,7 +9,7 @@
 <!--<![endif]-->
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-	<title>Protea Csoport - Nyilvántartó 1.0</title>
+	<title>Protea Csoport - Nyilvántartó 1.1</title>
 	<meta name="description" content="Megrendelések nyilvántartása, beszerzések optimalizálása"/> 
 	<meta name="keywords" content="koszorú, koszorú kötés"/> 
 	<meta name="generator" content=""/>
