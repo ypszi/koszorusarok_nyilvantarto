@@ -289,14 +289,13 @@
 		<table id="gallery" style="border-style:solid; border-left-width:15px; border-color: #509690; margin-top: 5px; width: 730px;">
 			<tr class="topborder">
 				<td style="font: normal 16px/18px 'Arial'; color: #89a583;"> Képek feltöltése:
-					<input type="file" name="swreath_img_gallery[]" id="swreath_img_gallery" onchange="thumbnail2(this);" multiple>
+					<input type="file" name="swreath_img_gallery[]" id="swreath_img_gallery" multiple>
 				</td>
 				<td style="font: normal 16px/18px 'Arial'; color: #89a583;"> Galéria:
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<img id="img_prev2" src="#" alt="Feltöltendő kép" style="visibility: hidden;">
 				</td>
 				<td>
 					<?php
@@ -329,7 +328,7 @@
 				<td></td>
 				<td></td>
 				<td> Eredeti értékesítési ár: </td>
-				<td> <?php echo $orig_sale_price; ?>  </td>
+				<td> <?php echo number_format($orig_sale_price, 0, ',', ' ').' Ft'; ?>  </td>
 				<td></td>
 				<td></td>
 			</tr>

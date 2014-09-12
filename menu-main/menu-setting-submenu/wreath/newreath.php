@@ -184,7 +184,7 @@
 				$allowedExts = array("gif", "GIF", "jpeg", "JPEG", "jpg", "JPG", "png", "PNG");
 				$exploded = explode(".", $filename);
 				$extension = end($exploded);
-				$target = "../../../img/wreath/";
+				$target = "../../../img/gallery/";
 				$maxsize = 10485760; // 10MB -> 10240kbyte * 1024byte
 
 				if ((($filetype == "image/gif")
@@ -256,11 +256,17 @@
 				$query_ins = "INSERT INTO `special_wreath` (`name`, `fancy`, `base_wreath_id`, `calculate_price`, `sale_price`, `picture`, `note`) VALUES ('$wreath_name', '$wreath_fancy', '".$row_id['id']."','$calcprice','$endprice','$picture', '$note')";
 				mysql_query($query_ins, $conn) or die(mysql_error());
 				$swreath_id = mysql_insert_id();
-
 				foreach ($filenames as $filename) {
-					$url = $conf_path_abs . "img/wreath/". $filename;
+					$target_path = $target . $swreath_id;
+					if ( !is_dir($target_path) ) {
+						$old_umask = umask(0);
+						mkdir($target_path);
+						umask($old_umask);
+					}
+					$url = $conf_path_abs . "img/gallery/$swreath_id/". $filename;
 					$query = "INSERT INTO `special_wreath_img` (`special_wreath_id`, `url`) VALUES ($swreath_id, '$url') ";
 					$result = mysql_query($query, $conn) or die(mysql_error());
+					rename($target . $filename, $target_path. "/" . $filename);
 				}
 
 				$ind = 1;

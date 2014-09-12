@@ -157,6 +157,21 @@
 			$files = $_FILES['swreath_img_gallery'];
 
 			if (count($files['name']) <= 5) {
+
+				$target = "../../../img/gallery/$wreath_id/";
+				if ( !is_dir($target) ) {
+					$old_umask = umask(0);
+					mkdir($target);
+					umask($old_umask);
+				}
+
+				$files_to_del = glob("$target*");
+				foreach($files_to_del as $file){
+					if(is_file($file)) {
+						unlink($file);
+					}
+				}
+
 				for ($i=0; $i < count($files['name']); $i++) {
 					$filename = $files['name'][$i];
 					$ftmp_name = $files['tmp_name'][$i];
@@ -188,7 +203,6 @@
 					$allowedExts = array("gif", "GIF", "jpeg", "JPEG", "jpg", "JPG", "png", "PNG");
 					$exploded = explode(".", $filename);
 					$extension = end($exploded);
-					$target = "../../../img/gallery/";
 					$maxsize = 10485760; // 10MB -> 10240kbyte * 1024byte
 
 					if ((($filetype == "image/gif")
@@ -208,15 +222,12 @@
 								</script>";
 						} else {
 
-							$query_url = "SELECT url FROM `special_wreath_img` WHERE `special_wreath_id`=$wreath_id";
-							$result_url = mysql_query($query_url) or die (mysql_error());
-
-							while ($row = mysql_fetch_assoc($result_url)) {
-								unlink( $target . basename($row['url']) );
-							}
-
 							if (file_exists($target . $filename)) {
-								unlink( $target . $filename );
+								$save_errors++;
+								echo "<script type=\"text/javascript\">
+								document.getElementById('alertwindow').innerHTML = '<h1>Ezen a f&aacute;jln&eacute;ven m&aacute;r van k&eacute;p!</h1>';
+								document.getElementById('alertwindow').style.display = 'block';
+								</script>";
 							}
 
 							$filenames[] = $filename;
@@ -281,7 +292,7 @@
 				$result_del = mysql_query($query_del) or die (mysql_error());
 
 				foreach ($filenames as $filename) {
-					$url = $conf_path_abs . "img/gallery/". $filename;
+					$url = $conf_path_abs . "img/gallery/$wreath_id/". $filename;
 					$query = "INSERT INTO `special_wreath_img` (`special_wreath_id`, `url`) VALUES ($wreath_id, '$url') ";
 					$result = mysql_query($query, $conn) or die(mysql_error());
 				}
