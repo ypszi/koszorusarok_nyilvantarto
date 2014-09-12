@@ -129,6 +129,7 @@
 				}
 			} else {
 				if ($file_size > $maxsize) {
+					$save_errors++;
 					echo "<script type=\"text/javascript\">
 						document.getElementById('alertwindow').innerHTML = '<h1>T&uacute;l nagy f&aacute;jlm&eacute;ret!</h1>';
 						document.getElementById('alertwindow').style.display = 'block';
