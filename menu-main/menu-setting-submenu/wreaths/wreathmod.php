@@ -111,21 +111,14 @@
 						</script>";
 				}
 				else {
-
 					if (file_exists($target . $file_name)) {
-						$save_errors++;
-						echo "<script type=\"text/javascript\">
-						document.getElementById('alertwindow').innerHTML = '<h1>Ez a f&aacute;jl m&aacute;r l&eacute;tezik: " . $file_name . "! </h1>';
-						document.getElementById('alertwindow').style.display = 'block';
-						</script>";
-					} else {
-						move_uploaded_file($_FILES["file"]["tmp_name"], $target . $file_name);
-						echo "<script type=\"text/javascript\">
-						document.getElementById('alertwindow').innerHTML = '<h1>K&eacute;pfelt&ouml;lt&eacute;s sikeres!</h1>';
-						document.getElementById('alertwindow').style.display = 'block';
-						</script>";
-						//echo "File stored in: " . "upload/" . $file_name;
+						unlink($target . filename);
 					}
+					move_uploaded_file($_FILES["file"]["tmp_name"], $target . $file_name);
+					echo "<script type=\"text/javascript\">
+					document.getElementById('alertwindow').innerHTML = '<h1>K&eacute;pfelt&ouml;lt&eacute;s sikeres!</h1>';
+					document.getElementById('alertwindow').style.display = 'block';
+					</script>";
 				}
 			} else {
 				if ($file_size > $maxsize) {
@@ -154,7 +147,9 @@
 
 		// Galéria feltöltés
 		$filenames = array();
-		if (isset($_FILES['swreath_img_gallery']) === true) {
+
+		// isset($_FILES['swreath_img_gallery']) igazat ad vissza, mert üres értékekkel, de létezik
+		if ( !in_array("", $_FILES['swreath_img_gallery']['name']) ) {
 			$files = $_FILES['swreath_img_gallery'];
 
 			if (count($files['name']) <= 5) {
