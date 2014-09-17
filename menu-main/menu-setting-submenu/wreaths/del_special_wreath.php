@@ -3,6 +3,15 @@
 
 	$id = $_POST['id'];
 
+	$target = "../../../img/gallery/$id/*";
+
+	$files_to_del = glob("$target");
+	foreach($files_to_del as $file){
+		if(is_file($file)) {
+			unlink($file);
+		}
+	}
+
 	$query_del = "DELETE FROM `special_wreath` WHERE `id`=$id";
 	mysql_query($query_del) or die (mysql_error());
 
